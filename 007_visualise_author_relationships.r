@@ -5,7 +5,7 @@
 library(igraph)
 g <- as.undirected(graph.adjacency(topic_df_dist))
 layout1 <- layout.fruchterman.reingold(g, niter=500)
-plot(g, layout=layout1, edge.curved = TRUE, vertex.size = 1,  vertex.color= "grey", edge.arrow.size = 0.1, vertex.label.dist=0.5, vertex.label = NA)
+plot(g, layout=layout1, edge.curved = TRUE, vertex.size = 1,  vertex.color= "grey", edge.arrow.size = 0, vertex.label.dist=0.5, vertex.label = NA)
 
 
 # interactive in a web browser

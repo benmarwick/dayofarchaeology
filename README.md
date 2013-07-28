@@ -474,8 +474,8 @@ Results
 [7] "Susan Greaney.1"            "jpalmer"                   
 
 
-Here is a static visualisation of the relationship between all the authors...
+Here is a static visualisation of the relationship between all the authors:
 ![static visualisation](figures/static.png)
 
-Here is a [slightly interactive visualisation](http://htmlpreview.github.io/?https://github.com/benmarwick/dayofarchaeology/master/figures/d3net.html), where we can see names on the nodes and inspect them in more detail...
+Here is a [slightly interactive visualisation](http://htmlpreview.github.io/?https://github.com/benmarwick/dayofarchaeology/master/figures/d3net.html), where we can see names on the nodes (click on them to magnify the name) and inspect them in more detail by dragging them around.
 
