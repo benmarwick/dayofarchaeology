@@ -10,7 +10,7 @@ documents <- data.frame(text = blogtext$text,
 mallet.instances <- mallet.import(documents$id, documents$text, "C:/mallet-2.0.7/stoplists/en.txt", token.regexp = "\\p{L}[\\p{L}\\p{P}]+\\p{L}")
 
 ## Create a topic trainer object.
-n.topics <- 20
+n.topics <- 30
 topic.model <- MalletLDA(n.topics)
 
 ## Load our documents. We could also pass in the filename of a 
@@ -47,7 +47,7 @@ topic.docs <- topic.docs / rowSums(topic.docs)
 
 ## Get a vector containing short names for the topics
 topics.labels <- rep("", n.topics)
-for (topic in 1:n.topics) topics.labels[topic] <- paste(mallet.top.words(topic.model, topic.words[topic,], num.top.words=10)$words, collapse=" ")
+for (topic in 1:n.topics) topics.labels[topic] <- paste(mallet.top.words(topic.model, topic.words[topic,], num.top.words=5)$words, collapse=" ")
 # have a look at keywords for each topic
 topics.labels
 
