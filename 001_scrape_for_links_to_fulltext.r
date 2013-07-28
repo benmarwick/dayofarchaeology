@@ -5,7 +5,7 @@
 library(RCurl)
 library(XML)
 
-n <- 60 # determined by inspecting the first page
+n <- 65 # determined by inspecting the first page
 # pre-allocate list to fill
 links <- vector("list", length = n)
 for(i in 1:n){

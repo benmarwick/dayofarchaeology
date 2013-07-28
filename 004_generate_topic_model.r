@@ -40,6 +40,17 @@ topic.model$maximize(10)
 doc.topics <- mallet.doc.topics(topic.model, smoothed=T, normalized=T)
 topic.words <- mallet.topic.words(topic.model, smoothed=T, normalized=T)
 
+# from http://www.cs.princeton.edu/~mimno/R/clustertrees.R
+## transpose and normalize the doc topics
+topic.docs <- t(doc.topics)
+topic.docs <- topic.docs / rowSums(topic.docs)
+
+## Get a vector containing short names for the topics
+topics.labels <- rep("", n.topics)
+for (topic in 1:n.topics) topics.labels[topic] <- paste(mallet.top.words(topic.model, topic.words[topic,], num.top.words=10)$words, collapse=" ")
+# have a look at keywords for each topic
+topics.labels
+
 # create data.frame with columns as authors and rows as topics
 topic_docs <- data.frame(topic.docs)
 names(topic_docs) <- documents$id
