@@ -65,9 +65,9 @@ topic.proportions.df <- melt(cbind(data.frame(df1),
                              id.vars = "document") 
 # plot for each doc by that author
 require(ggplot2)
-qplot(topic, value, fill=document, ylab="proportion",
-      data=topic.proportions.df, geom="bar") +
-  opts(axis.text.x = theme_text(angle=90, hjust=1)) +  
+ggplot(topic.proportions.df, aes(topic, value, fill=document)) +
+  geom_bar(stat="identity") +
+  ylab("proportion") +
+  theme(axis.text.x = element_text(angle=90, hjust=1)) +  
   coord_flip() +
   facet_wrap(~ document, ncol=5)
-
