@@ -54,3 +54,20 @@ topics.labels
 # create data.frame with columns as authors and rows as topics
 topic_docs <- data.frame(topic.docs)
 names(topic_docs) <- documents$id
+
+# find top n topics for a certain author
+df1 <- t(topic_docs[,grep("Jacq Matthews", names(topic_docs))])
+colnames(df1) <- topics.labels
+require(reshape2)
+topic.proportions.df <- melt(cbind(data.frame(df1),
+                                   document=factor(1:nrow(df1))),
+                             variable.name="topic",
+                             id.vars = "document") 
+# plot for each doc by that author
+require(ggplot2)
+qplot(topic, value, fill=document, ylab="proportion",
+      data=topic.proportions.df, geom="bar") +
+  opts(axis.text.x = theme_text(angle=90, hjust=1)) +  
+  coord_flip() +
+  facet_wrap(~ document, ncol=5)
+
