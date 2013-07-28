@@ -8,7 +8,8 @@ linksall <- unlist(links)
 blogtext <- data.frame(text =  vector(length = length(linksall)),                                     
                        monthday = vector(length = length(linksall)),
                        year = vector(length = length(linksall)),
-                       author = vector(length = length(linksall)) )
+                       author = vector(length = length(linksall))
+                       )
 )
 
 # loop over the URLs to pull full text, etc. from each URL
@@ -36,3 +37,6 @@ for(i in 1:length(linksall)){
     blogtext[i,4] <- xpathSApply(blogdata, "//*/span[@class='fn']", xmlValue)
   ); if(class(result) == "try-error") next;
 }
+
+# add columns of URLs to the fulltext post
+blogtext$url <- linksall
