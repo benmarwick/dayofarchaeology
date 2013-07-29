@@ -84,6 +84,12 @@ Sarah's 2013 post is about volunteers cleaning up a historic cemetery, which is 
 
 While the topic model has a few comical and naive moments, my informal and brief validation indicates that it is clearly not complete nonsense and is credible as a representation of the corpus. 
 
+#### Visualisation of similar topics
+
+To get a sense of relationships amongst the topics we can visualize a hierarchical clustering of topics. Here we can see that the museum topics tend to form a group distinct from the others. Excavation and field archaeology form a high-level cluster as well as regional historical archaeology topics (on the far right). The majority of topics are quite similar to each other.
+
+![cluster of topics](figures/topiccluster.png)
+
 #### Groups of similar authors
 
 Now that we've established the credibility of the topic model, we can look at how authors group together according to the mixtures of topics in their posts. Here are the groups of authors I get after a k-means analysis on topic proportions. I arbitrarily set the number of groups at 30 (you can run the code yourself and change the number to see what happens). With additional effort we could [algorithmically determine the optimum number of groups](http://stackoverflow.com/questions/15376075/cluster-analysis-in-r-determine-the-optimal-number-of-clusters/15376462#15376462). If there is a number after the name it's because that author has more than one post on the blog.
@@ -524,10 +530,10 @@ Now that we've established the credibility of the topic model, we can look at ho
               
 #### Visualisation of author groups
 
-Here is a static visualisation of the relationship between all the authors:
+Here is a static visualisation of the relationship between all the authors. We get a quick sense that there are distinctive groups, but it's too small to show author names which is a major limitation.
 ![static visualisation](figures/static.png)
 
-Here is a [slightly interactive visualisation](http://htmlpreview.github.io/?https://github.com/benmarwick/dayofarchaeology/master/figures/d3net.html), where we can see names on the nodes (click on them to magnify the name) and inspect them in more detail by dragging them around. A more interactive version can be downloaded [here](https://raw.github.com/benmarwick/dayofarchaeology/master/figures/g.graphml) (right-click -> save link as...) and opened in [Gephi](https://gephi.org/)
+Here is a [slightly interactive visualisation](http://htmlpreview.github.io/?https://github.com/benmarwick/dayofarchaeology/master/figures/d3net.html), where we can see names on the nodes (click on them to magnify the name) and inspect them in more detail by dragging them around. A more interactive version can be downloaded [here](https://raw.github.com/benmarwick/dayofarchaeology/master/figures/g.graphml) (right-click -> save link as...) and opened in [Gephi](https://gephi.org/). 
 
 Discussion
 ----

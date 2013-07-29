@@ -4,7 +4,8 @@
 
 require(mallet)
 documents <- data.frame(text = blogtext$text,
-                        id =   make.unique(blogtext$author), 
+                        id =   make.unique(blogtext$author),
+                        class = blogtext$year, 
                         stringsAsFactors=FALSE)
 
 mallet.instances <- mallet.import(documents$id, documents$text, "C:/mallet-2.0.7/stoplists/en.txt", token.regexp = "\\p{L}[\\p{L}\\p{P}]+\\p{L}")
@@ -47,9 +48,11 @@ topic.docs <- topic.docs / rowSums(topic.docs)
 
 ## Get a vector containing short names for the topics
 topics.labels <- rep("", n.topics)
-for (topic in 1:n.topics) topics.labels[topic] <- paste(mallet.top.words(topic.model, topic.words[topic,], num.top.words=50)$words, collapse=" ")
+for (topic in 1:n.topics) topics.labels[topic] <- paste(mallet.top.words(topic.model, topic.words[topic,], num.top.words=5)$words, collapse=" ")
 # have a look at keywords for each topic
 topics.labels
+
+
 
 # create data.frame with columns as authors and rows as topics
 topic_docs <- data.frame(topic.docs)
@@ -71,3 +74,19 @@ ggplot(topic.proportions.df, aes(topic, value, fill=document)) +
   theme(axis.text.x = element_text(angle=90, hjust=1)) +  
   coord_flip() +
   facet_wrap(~ document, ncol=5)
+
+## cluster based on shared words
+plot(hclust(dist(topic.words)), labels=topics.labels)
+
+
+## How do topics differ across different years?
+topic.words.2012 <- mallet.subset.topic.words(topic.model, documents$class == 2012, smoothed=T, normalized=T)
+topic.words.2013 <- mallet.subset.topic.words(topic.model, documents$class == 2013, smoothed=T, normalized=T)
+
+topic.words.2012 <- mallet.subset.doc.topics(topic.model, documents$class == 2012, smoothed=T, normalized=T)
+topic.words.2013 <- mallet.subset.topic.words(topic.model, documents$class == 2013, smoothed=T, normalized=T)
+
+
+## How do they compare?
+mallet.top.words(topic.model, topic.words.2012[30,])
+mallet.top.words(topic.model, topic.words.2013[30,])
