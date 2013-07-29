@@ -96,11 +96,9 @@ We can get an impression of the shift in topics from 2012 to 2013 by comparing t
 
 ![difference in topics](figures/topicdiffs.png)
 
-
-
 #### Groups of similar authors
 
-Now that we've established the credibility of the topic model, we can look at how authors group together according to the mixtures of topics in their posts. Here are the groups of authors I get after a k-means analysis on topic proportions. I arbitrarily set the number of groups at 30 (you can run the code yourself and change the number to see what happens). With additional effort we could [algorithmically determine the optimum number of groups](http://stackoverflow.com/questions/15376075/cluster-analysis-in-r-determine-the-optimal-number-of-clusters/15376462#15376462). If there is a number after the name it's because that author has more than one post on the blog.
+Now that we've established the credibility of the topic model, we can look at how authors group together according to the mixtures of topics in their posts. Here are the groups of authors I get after a k-means analysis on topic proportions. I arbitrarily set the number of groups at 30 (you can run the code yourself and change the number to see what happens). With additional effort we could [algorithmically determine the optimum number of groups](http://stackoverflow.com/questions/15376075/cluster-analysis-in-r-determine-the-optimal-number-of-clusters/15376462#15376462). If there is a number after the name it's because that author has more than one post on the blog. Reassuringly, most of the time we see multiple posts by the same author in the same cluster. Although we saw above that it's not always the case that one author writes about the same general mix of topics in their posts. 
 
 [[1]]
  [1] "sarah_may1"          "Claire Bradshaw"     "MOLA.1"             
@@ -541,7 +539,9 @@ Now that we've established the credibility of the topic model, we can look at ho
 Here is a static visualisation of the relationship between all the authors. We get a quick sense that there are distinctive groups, but it's too small to show author names which is a major limitation.
 ![static visualisation](figures/static.png)
 
-Here is a [slightly interactive visualisation](http://htmlpreview.github.io/?https://github.com/benmarwick/dayofarchaeology/master/figures/d3net.html), where we can see names on the nodes (click on them to magnify the name) and inspect them in more detail by dragging them around. A more interactive version can be downloaded [here](https://raw.github.com/benmarwick/dayofarchaeology/master/figures/g.graphml) (right-click -> save link as...) and opened in [Gephi](https://gephi.org/). 
+Here is a [slightly interactive visualisation](http://htmlpreview.github.io/?https://github.com/benmarwick/dayofarchaeology/master/figures/d3net.html), where we can see names on the nodes (click on them to magnify the name) and inspect them in more detail by dragging them around. 
+
+An even more interactive version can be downloaded [here](https://raw.github.com/benmarwick/dayofarchaeology/master/figures/g.graphml) (right-click -> save link as...) and opened in [Gephi](https://gephi.org/). 
 
 Discussion and Conclusion
 ----
