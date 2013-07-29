@@ -1,11 +1,13 @@
-dayofarchaeology
+A Distant Reading of the Day of Archaeology
 ====
 
 Introduction
 ----
-The [Day of Archaeology](http://en.wikipedia.org/wiki/Day_of_Archaeology) is an event where archaeologists write about their acitivities on a [group blog](http://www.dayofarchaeology.com/). The event started in 2011 and aims to 'provide a window into the daily lives of archaeologists from all over the world'. Currently there are over 1000 posts on the blog, rather a lot to read in one sitting. 
+The [Day of Archaeology](http://en.wikipedia.org/wiki/Day_of_Archaeology) is an event where archaeologists write about their acitivities on a [group blog](http://www.dayofarchaeology.com/). The event started in 2011 and aims to 'provide a window into the daily lives of archaeologists from all over the world'. Currently there are over 1000 posts on the blog, rather a lot to read in one sitting. Distant reading is a term advocated by [Franco Moretti](http://en.wikipedia.org/wiki/Franco_Moretti) to refer to efforts to understand texts through quantitative analysis and visualisation. 
 
-To get a quick overview of what all these archaeologists were writing about, I've generated a topic model to find the most important themes amongst the posts. By browsing the topics I can see what they key ideas are withouth having to read every word of every post. This approach is inspired by Matt Jockers' [analysis of the 2010 Day of Digital Humanities blog posts](http://www.matthewjockers.net/2010/03/19/whos-your-dh-blog-mate-match-making-the-day-of-dh-bloggers-with-topic-modeling/), and Shawn Graham, who did a similar [analysis of the 2011 Day of Archaeology blog posts](http://electricarchaeology.ca/2012/07/09/mining-a-day-of-archaeology/). 
+A quantitative method that has become [popular](http://mith.umd.edu/topic-modeling-in-the-humanities-an-overview/) amongst scholars working on distant readings of large amounts of text is [topic modelling](https://en.wikipedia.org/wiki/Topic_model/). To get a quick overview of what all these archaeologists were writing about, I've generated a topic model to find the most important themes amongst the posts. By browsing the topics I can see what they key ideas are withouth having to read every word of every post. This approach is inspired by Matt Jockers' [analysis of the 2010 Day of Digital Humanities blog posts](http://www.matthewjockers.net/2010/03/19/whos-your-dh-blog-mate-match-making-the-day-of-dh-bloggers-with-topic-modeling/), and Shawn Graham, who did a similar [analysis of the 2011 Day of Archaeology blog posts](http://electricarchaeology.ca/2012/07/09/mining-a-day-of-archaeology/) and has also written an [accessible introduction to topic modelling](http://programminghistorian.org/lessons/topic-modeling-and-mallet). 
+
+The 
 
 Method
 ----
@@ -505,9 +507,5 @@ Here is a static visualisation of the relationship between all the authors:
 
 Here is a [slightly interactive visualisation](http://htmlpreview.github.io/?https://github.com/benmarwick/dayofarchaeology/master/figures/d3net.html), where we can see names on the nodes (click on them to magnify the name) and inspect them in more detail by dragging them around. A more interactive version can be downloaded [here](https://raw.github.com/benmarwick/dayofarchaeology/master/figures/g.graphml) (right-click -> save link as...) and opened in [Gephi](https://gephi.org/)
 
-Discussion
-----
 
-Conclusion
-----
 
