@@ -7,8 +7,6 @@ The [Day of Archaeology](http://en.wikipedia.org/wiki/Day_of_Archaeology) is an 
 
 A quantitative method that has become [popular](http://mith.umd.edu/topic-modeling-in-the-humanities-an-overview/) amongst scholars working on distant readings of large amounts of text is [topic modelling](https://en.wikipedia.org/wiki/Topic_model/). To get a quick overview of what all these archaeologists were writing about, I've generated a topic model to find the most important themes amongst the posts. By browsing the topics I can see what they key ideas are withouth having to read every word of every post. This approach is inspired by Matt Jockers' [analysis of the 2010 Day of Digital Humanities blog posts](http://www.matthewjockers.net/2010/03/19/whos-your-dh-blog-mate-match-making-the-day-of-dh-bloggers-with-topic-modeling/), and Shawn Graham, who did a similar [analysis of the 2011 Day of Archaeology blog posts](http://electricarchaeology.ca/2012/07/09/mining-a-day-of-archaeology/) and has also written an [accessible introduction to topic modelling](http://programminghistorian.org/lessons/topic-modeling-and-mallet). 
 
-The 
-
 Method
 ----
 My method uses the [R](http://www.r-project.org/) programming language and a few external tools, most notably [MALLET](http://mallet.cs.umass.edu/). The method should be completely reproducible using the code in this repository (go ahead and try it! I recommend using R with [RStudio](http://www.rstudio.com/ide/download/)). Here's a quick summary of the process, do inspect the code for more details. 
