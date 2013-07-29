@@ -85,6 +85,7 @@ topic_docs_t <- data.frame(t(topic_docs))
 topic_docs_t$year <- documents$class
 df3 <- aggregate(topic_docs_t, by=list(topic_docs_t$year), FUN=mean)
 df3 <- data.frame(t(df3[-3,-length(df3)]), stringsAsFactors = FALSE)
+names(df3) <- c("y2012", "y2013")
 df3 <- df3[-1,]
 df3 <- data.frame(apply(df3, 2, as.numeric, as.character))
 df3$topic <- 1:n.topics
