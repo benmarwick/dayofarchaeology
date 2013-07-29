@@ -47,7 +47,7 @@ topic.docs <- topic.docs / rowSums(topic.docs)
 
 ## Get a vector containing short names for the topics
 topics.labels <- rep("", n.topics)
-for (topic in 1:n.topics) topics.labels[topic] <- paste(mallet.top.words(topic.model, topic.words[topic,], num.top.words=5)$words, collapse=" ")
+for (topic in 1:n.topics) topics.labels[topic] <- paste(mallet.top.words(topic.model, topic.words[topic,], num.top.words=50)$words, collapse=" ")
 # have a look at keywords for each topic
 topics.labels
 
