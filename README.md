@@ -22,7 +22,7 @@ I've put all the scraped data in a [csv file here](https://raw.github.com/benmar
 
 #### Summary of the corpus
 
-In the 2012-2013 corpus there are a total of 352,558 words in 622 blog posts by 370 unique authors (as of 5pm EST 28 July 2013). The author count is probably an underestimate as some posts ([like this very long one](http://www.dayofarchaeology.com/life-in-a-day-the-silchester-town-life-project/)) are written by multiple people using a common affliation as the author name. There were fewer posts in 2013 (n = 273) compared to 2012 (n = 348), but the average length of the posts is slightly higher in 2013 (mean = 591) compared to 2012 (mean = 549). Here's a plot of the distribution of words per post by year:
+In the 2012-2013 corpus there are a total of 352,558 words in 622 blog posts by 370 unique authors (as of 5pm EST 28 July 2013, a few more posts trickled in after this time, but this analysis is a weekend project, so it stops on a Sunday evening). The author count is probably an underestimate as some posts ([like this very long one](http://www.dayofarchaeology.com/life-in-a-day-the-silchester-town-life-project/)) are written by multiple people using a common affliation as the author name. There were fewer posts in 2013 (n = 273) compared to 2012 (n = 348), but the average length of the posts is slightly higher in 2013 (mean = 591) compared to 2012 (mean = 549). Here's a plot of the distribution of words per post by year:
 ![wpp](figures/wpp.png)
 
 #### Summary of the topic model
