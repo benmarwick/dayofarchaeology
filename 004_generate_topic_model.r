@@ -56,7 +56,7 @@ topic_docs <- data.frame(topic.docs)
 names(topic_docs) <- documents$id
 
 # find top n topics for a certain author
-df1 <- t(topic_docs[,grep("Jacq Matthews", names(topic_docs))])
+df1 <- t(topic_docs[,grep("Sarah Bennett", names(topic_docs))])
 colnames(df1) <- topics.labels
 require(reshape2)
 topic.proportions.df <- melt(cbind(data.frame(df1),

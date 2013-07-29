@@ -3,9 +3,11 @@ A Distant Reading of the Day of Archaeology
 
 Introduction
 ----
-The [Day of Archaeology](http://en.wikipedia.org/wiki/Day_of_Archaeology) is an event where archaeologists write about their acitivities on a [group blog](http://www.dayofarchaeology.com/). The event started in 2011 and aims to 'provide a window into the daily lives of archaeologists from all over the world'. Currently there are over 1000 posts on the blog, rather a lot to read in one sitting. Distant reading is a term advocated by [Franco Moretti](http://en.wikipedia.org/wiki/Franco_Moretti) to refer to efforts to understand texts through quantitative analysis and visualisation. 
+The [Day of Archaeology](http://en.wikipedia.org/wiki/Day_of_Archaeology) is an event where archaeologists write about their acitivities on a [group blog](http://www.dayofarchaeology.com/). The event started in 2011 and aims to 'provide a window into the daily lives of archaeologists from all over the world'. Currently there are over 1000 posts on the blog, rather a lot to read in one sitting. Rather than closely read each post, we can do a distant reading to get some insights into the corpus. Distant reading is a term advocated by [Franco Moretti](http://en.wikipedia.org/wiki/Franco_Moretti) to refer to efforts to understand texts through quantitative analysis and visualisation. 
 
-A quantitative method that has become [popular](http://mith.umd.edu/topic-modeling-in-the-humanities-an-overview/) amongst scholars working on distant readings of large amounts of text is [topic modelling](https://en.wikipedia.org/wiki/Topic_model/). To get a quick overview of what all these archaeologists were writing about, I've generated a topic model to find the most important themes amongst the posts. By browsing the topics I can see what they key ideas are withouth having to read every word of every post. This approach is inspired by Matt Jockers' [analysis of the 2010 Day of Digital Humanities blog posts](http://www.matthewjockers.net/2010/03/19/whos-your-dh-blog-mate-match-making-the-day-of-dh-bloggers-with-topic-modeling/), and Shawn Graham, who did a similar [analysis of the 2011 Day of Archaeology blog posts](http://electricarchaeology.ca/2012/07/09/mining-a-day-of-archaeology/) and has also written an [accessible introduction to topic modelling](http://programminghistorian.org/lessons/topic-modeling-and-mallet). 
+A quantitative method that has recently become [popular](http://mith.umd.edu/topic-modeling-in-the-humanities-an-overview/) for distant reading is [topic modelling](https://en.wikipedia.org/wiki/Topic_model/). To get some insights into what all these archaeologists were writing about, I've generated a topic model to find the most important themes amongst the posts. By browsing the topics I can see what they key ideas are withouth having to read every word of every post. This approach is inspired by Matt Jockers' [analysis of the 2010 Day of Digital Humanities blog posts](http://www.matthewjockers.net/2010/03/19/whos-your-dh-blog-mate-match-making-the-day-of-dh-bloggers-with-topic-modeling/), and Shawn Graham, who did a similar [analysis of the 2011 Day of Archaeology blog posts](http://electricarchaeology.ca/2012/07/09/mining-a-day-of-archaeology/) and has also written an [accessible introduction to topic modelling](http://programminghistorian.org/lessons/topic-modeling-and-mallet). 
+
+The questions I'm attempting to answer with this distant reading include: what is in a typical day of an archaeologist? What are the different kinds of day that are represented in this collection? Do all archaeologists have generally similar days or not? As an archaeologist also I'm curious to see how my day compares with others!
 
 Method
 ----
@@ -19,10 +21,8 @@ Results
 I've put all the scraped data in a [csv file here](https://raw.github.com/benmarwick/dayofarchaeology/master/data/dayofarchaeology.csv) (right-click -> save link as...) in case you want to browse or do other analyses. The csv file contains the full text of each post, the name of the author, the date of publication and the URL of the post. 
 
 #### Summary of the corpus
-In the 2012-2013 corpus there are a total of 352,558 words in 622 blog posts by 370 unique authors. The author count is probably an underestimate as some posts are written by multiple people using a common affliation as the author name. There were fewer posts in 2013 (n = 273) compared to 2012 (n = 348), but the average length of the posts is slightly higher in 2013 (mean = 591) compared to 2012 (mean = 549). Here's a plot of the distribution of words per post by year:
+In the 2012-2013 corpus there are a total of 352,558 words in 622 blog posts by 370 unique authors (as of 5pm EST 28 July 2013). The author count is probably an underestimate as some posts ([like this very long one](http://www.dayofarchaeology.com/life-in-a-day-the-silchester-town-life-project/)) are written by multiple people using a common affliation as the author name. There were fewer posts in 2013 (n = 273) compared to 2012 (n = 348), but the average length of the posts is slightly higher in 2013 (mean = 591) compared to 2012 (mean = 549). Here's a plot of the distribution of words per post by year:
 ![wpp](figures/wpp.png)
-
-
 
 #### Here are the key words for the 30 topics generated by the LDA model:
 
@@ -60,6 +60,15 @@ In the 2012-2013 corpus there are a total of 352,558 words in 622 blog posts by 
 We might ask what are the top five topics in the post by a certain author? For example, here we can see the mixture of topics in the posts by my friend and colleague Jacq Matthews:
 
 ![Jacq's topics](figures/topicprops.png)
+
+And here's a graph of an interesting post by Ryan Baker on [using small aerial drones for archaeological photography](http://www.dayofarchaeology.com/aerial-survey-of-archaeological-excavations-using-quad-rotor-and-hex-rotor-aircraft-arch-aerial/):
+
+![Ryan's topics](figures/topicprops2.png)
+
+And here we can see that [Sarah Bennett](http://www.dayofarchaeology.com/author/bennetts/), an archaeologist in Florida, made quite different posts in each year:
+
+![Sarah's topics](figures/topicprops3.png)
+
 
 
 #### Here are the groups of authors. I arbitrarily set the number of groups at 30 (you can run the code yourself and change the number to see what happens). If there is a number after the name it's because that author has more than one post on the blog.
