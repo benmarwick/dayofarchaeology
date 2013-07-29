@@ -80,13 +80,22 @@ plot(hclust(dist(topic.words)), labels=topics.labels)
 
 
 ## How do topics differ across different years?
-topic.words.2012 <- mallet.subset.topic.words(topic.model, documents$class == 2012, smoothed=T, normalized=T)
-topic.words.2013 <- mallet.subset.topic.words(topic.model, documents$class == 2013, smoothed=T, normalized=T)
 
-topic.words.2012 <- mallet.subset.doc.topics(topic.model, documents$class == 2012, smoothed=T, normalized=T)
-topic.words.2013 <- mallet.subset.topic.words(topic.model, documents$class == 2013, smoothed=T, normalized=T)
+topic_docs_t <- data.frame(t(topic_docs))
+topic_docs_t$year <- documents$class
+df3 <- aggregate(topic_docs_t, by=list(topic_docs_t$year), FUN=mean)
+df3 <- data.frame(t(df3[-3,-length(df3)]), stringsAsFactors = FALSE)
+df3 <- df3[-1,]
+df3 <- data.frame(apply(df3, 2, as.numeric, as.character))
+df3$topic <- 1:n.topics
 
+# which topics differ the most?
+df3$diff <- df3[,1] - df3[,2] 
+df3[with(df3, order(-abs(diff))), ]
 
-## How do they compare?
-mallet.top.words(topic.model, topic.words.2012[30,])
-mallet.top.words(topic.model, topic.words.2013[30,])
+# plot
+df3m <- melt(df3[,-4], id = 3)
+ggplot(df3m, aes(fill = as.factor(topic), topic, value)) +
+  geom_bar(stat="identity") +
+  coord_flip()  +
+  facet_wrap(~ variable)

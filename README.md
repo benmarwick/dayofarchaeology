@@ -90,6 +90,14 @@ To get a sense of relationships amongst the topics we can visualize a hierarchic
 
 ![cluster of topics](figures/topiccluster.png)
 
+#### Comparison of topics in 2012 and 2013
+
+We can get an impression of the shift in topics from 2012 to 2013 by comparing the average proportions of each topic across all documents for each year. The five topics that are the most different are 12, 28, 6, 18 and 23. Topics 12, 23 and 28 are non-English language topics, suggesting are greater international contribution in 2013. Topic 6 seems to reflect the large number of posts in 2013 by or about archaeologists working with the Royal Commission on the Ancient and Historical Monuments of Scotland.
+
+![difference in topics](figures/topicdiffs.png)
+
+
+
 #### Groups of similar authors
 
 Now that we've established the credibility of the topic model, we can look at how authors group together according to the mixtures of topics in their posts. Here are the groups of authors I get after a k-means analysis on topic proportions. I arbitrarily set the number of groups at 30 (you can run the code yourself and change the number to see what happens). With additional effort we could [algorithmically determine the optimum number of groups](http://stackoverflow.com/questions/15376075/cluster-analysis-in-r-determine-the-optimal-number-of-clusters/15376462#15376462). If there is a number after the name it's because that author has more than one post on the blog.
