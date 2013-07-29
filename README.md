@@ -77,9 +77,9 @@ And here we can see that [Sarah Bennett](http://www.dayofarchaeology.com/author/
 
 Sarah's 2013 post is about volunteers cleaning up a historic cemetery, which is nicely captured by topic 3. Topic 29 reflects the public volunteer aspect of the post. Sarah's 2012 post is about the excavation of a shell midden, clearly indicated by a high proportions of topic 1 and 20. Topic 20 is interesting because it seems mostly to be about the archaeology of war. We see 'shell' and 'shells' in topic 20 between the algorithm hasn't been able to distiguish between shells you eat and other kinds of shells (bombs, wrecked buildings, etc.). 
 
-So while the topic model has a few comical and naive moments, it is clearly not complete nonsense and is credible as a representation of the corpus. 
+While the topic model has a few comical and naive moments, my informal and brief validation indicates that it is clearly not complete nonsense and is credible as a representation of the corpus. 
 
-#### Here are the groups of authors I get after a k-means analysis on topic proportions. I arbitrarily set the number of groups at 30 (you can run the code yourself and change the number to see what happens). If there is a number after the name it's because that author has more than one post on the blog.
+#### Now that we've established the credibility of the topic model, we can look at how authors group together according to the mixtures of topics in their posts. Here are the groups of authors I get after a k-means analysis on topic proportions. I arbitrarily set the number of groups at 30 (you can run the code yourself and change the number to see what happens). With additional effort we could [algorithmically determine the optimum number of groups](http://stackoverflow.com/questions/15376075/cluster-analysis-in-r-determine-the-optimal-number-of-clusters/15376462#15376462). If there is a number after the name it's because that author has more than one post on the blog.
 
 [[1]]
  [1] "sarah_may1"          "Claire Bradshaw"     "MOLA.1"             
