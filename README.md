@@ -543,6 +543,6 @@ Here is a [slightly interactive visualisation](http://htmlpreview.github.io/?htt
 
 An even more interactive version can be downloaded [here](https://raw.github.com/benmarwick/dayofarchaeology/master/figures/g.graphml) (right-click -> save link as...) and opened in [Gephi](https://gephi.org/). 
 
-Discussion and Conclusion
+
 ----
 
