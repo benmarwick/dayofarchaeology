@@ -49,9 +49,34 @@ nlabels <- table(wpp$year)
 #  To create the median labels, you can use by
 meds <- round(c(by(wpp$words, wpp$year, mean)),0)
 
+# make the plot
 require(ggplot2)
 ggplot(wpp, aes(as.factor(year), words, label=rownames(wpp))) +
   geom_violin() +
   geom_text(data = data.frame(), aes(x = names(meds) , y = meds, 
                                    label = paste("mean =", meds))) +
   xlab("Year")
+
+# check if a certain word is present at all 
+require(tm)
+# create corpus
+corp <- Corpus(VectorSource(blogtext[,1]))
+# process text 
+skipWords <- function(x) removeWords(x, stopwords("english"))
+funcs <- list(tolower, removePunctuation, removeNumbers, stripWhitespace, skipWords)
+corp <- tm_map(corp, FUN = tm_reduce, tmFuns = funcs)
+# create document term matrix
+dtm <- DocumentTermMatrix(corp, control = 
+                            # limit word lengths
+                            list(wordLengths = c(3,10))) # , 
+                                ## A few other options for text mining
+                                 # control weighting
+                                 # weighting = weightTfIdf, 
+                                 # keep words in more than 1%
+                                 # and less than 95% of docs
+                                 # bounds = list(global = c(
+                                 #  length(corp)*0.01,length(corp)*0.95))))
+
+# how many times does the word 'pyramid' occur in this document term matrix?
+dtmdf <- data.frame(inspect(dtm))
+sum(dtmdf[, names(dtmdf) == 'pyramid'])

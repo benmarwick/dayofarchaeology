@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>dayofarchaeology</title>
+<title>A Distant Reading of the Day of Archaeology</title>
 
 <style type="text/css">
 body, td {
@@ -141,19 +141,21 @@ hr {
 </head>
 
 <body>
-<h1>dayofarchaeology</h1>
+<h1>A Distant Reading of the Day of Archaeology</h1>
 
 <h2>Introduction</h2>
 
-<p>The <a href="http://en.wikipedia.org/wiki/Day_of_Archaeology">Day of Archaeology</a> is an event where archaeologists write about their acitivities on a <a href="http://www.dayofarchaeology.com/">group blog</a>. The event started in 2011 and aims to &#39;provide a window into the daily lives of archaeologists from all over the world&#39;. Currently there are over 1000 posts on the blog, rather a lot to read in one sitting. </p>
+<p>The <a href="http://en.wikipedia.org/wiki/Day_of_Archaeology">Day of Archaeology</a> is an event where archaeologists write about their acitivities on a <a href="http://www.dayofarchaeology.com/">group blog</a>. The event started in 2011 and aims to &#39;provide a window into the daily lives of archaeologists from all over the world&#39;. Currently there are over 1000 posts on the blog, rather a lot to read in one sitting. Rather than closely read each post, we can do a distant reading to get some insights into the corpus. Distant reading is a term advocated by <a href="http://en.wikipedia.org/wiki/Franco_Moretti">Franco Moretti</a> to refer to efforts to understand texts through quantitative analysis and visualisation. </p>
 
-<p>To get a quick overview of what all these archaeologists were writing about, I&#39;ve generated a topic model to find the most important themes amongst the posts. By browsing the topics I can see what they key ideas are withouth having to read every word of every post. This approach is inspired by Matt Jockers&#39; <a href="http://www.matthewjockers.net/2010/03/19/whos-your-dh-blog-mate-match-making-the-day-of-dh-bloggers-with-topic-modeling/">analysis of the 2010 Day of Digital Humanities blog posts</a>, and Shawn Graham, who did a similar <a href="http://electricarchaeology.ca/2012/07/09/mining-a-day-of-archaeology/">analysis of the 2011 Day of Archaeology blog posts</a>. </p>
+<p>A quantitative method that has recently become <a href="http://mith.umd.edu/topic-modeling-in-the-humanities-an-overview/">popular</a> for distant reading is <a href="https://en.wikipedia.org/wiki/Topic_model/">topic modelling</a>. To get some insights into what all these archaeologists were writing about, I&#39;ve generated a topic model to find the most important themes amongst the posts. By browsing the topics I can see what they key ideas are without having to read every word of every post. This approach is inspired by Matt Jockers&#39; <a href="http://www.matthewjockers.net/2010/03/19/whos-your-dh-blog-mate-match-making-the-day-of-dh-bloggers-with-topic-modeling/">analysis of the 2010 Day of Digital Humanities blog posts</a>, and Shawn Graham, who did a similar <a href="http://electricarchaeology.ca/2012/07/09/mining-a-day-of-archaeology/">analysis of the 2011 Day of Archaeology blog posts</a> and has also written an <a href="http://programminghistorian.org/lessons/topic-modeling-and-mallet">accessible introduction to topic modelling</a>. </p>
+
+<p>The questions I&#39;m attempting to answer with this distant reading include: what is a typical day for an archaeologist? What are the different kinds of day that are represented in this collection? Do all archaeologists have generally similar days or not? As an archaeologist also I&#39;m curious to see how my day compares with others!</p>
 
 <h2>Method</h2>
 
-<p>My method uses the <a href="http://www.r-project.org/">R</a> programming language and a few external tools, most notably <a href="http://mallet.cs.umass.edu/">MALLET</a>. The method should be completely reproducible using the code in this repository (go ahead and try it! I recommend using R with <a href="http://www.rstudio.com/ide/download/">RStudio</a>). Here&#39;s a quick summary of the process, do inspect the code for more details. </p>
+<p>My method uses the <a href="http://www.r-project.org/">R</a> programming language and a few external tools, most notably <a href="http://mallet.cs.umass.edu/">MALLET</a>. The method should be completely reproducible using the code in this repository (go ahead and try it! If you&#39;re coming to R for the first time, I recommend using R with <a href="http://www.rstudio.com/ide/download/">RStudio</a>). Here&#39;s a quick summary of the process, do inspect the code for more details. </p>
 
-<p>First, I scraped the <a href="http://www.dayofarchaeology.com">dayofarchaeology.com</a> site to get the links to the full text of each post (because the front and subsequent pages of the main site only give a snippet of text as a teaser). The <a href="http://www.dayofarchaeology.com">blog</a> has a <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 License</a> which means we are free to copy, share and remix the blog contents, provided we give proper attribution (did I mention all of this is coming from <a href="http://www.dayofarchaeology.com">dayofarchaeology.com</a>?) and make the results available with the same or similar licence (I use the <a href="http://opensource.org/licenses/MIT">MIT licence</a> for this repository, which is similar). Second, I pulled the full text from each post, along with the name of the author and the date. Third, I cleaned the text to remove unusual characters and formatting. Fourth, I generated a topic model using the latent Dirchlet allocation algorithm implemented MALLET (it&#39;s much faster that the pure R methods). I arbitrarily set the number of topics at 30 and generated one model with all posts from 2012-2013. Fifth, I computed a similarity matrix for the authors of each post based on the mixture of topics in each author&#39;s post. Sixth, I computed a k-means cluster analysis to assign each author into a group, based on the topics detected in their post. Seventh, I visualised the groups of authors with a network graph. Each step of the method has a corresponding file in this repository. </p>
+<p>First, I scraped the <a href="http://www.dayofarchaeology.com">dayofarchaeology.com</a> site to get the links to the full text of each post (because the front and subsequent pages of the main site only give a snippet of text as a teaser). The <a href="http://www.dayofarchaeology.com">blog</a> has a <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 License</a> which means we are free to copy, share and remix the blog contents, provided we give proper attribution (did I mention all of this is coming from <a href="http://www.dayofarchaeology.com">dayofarchaeology.com</a>?) and make the results available with the same or similar licence (I use the <a href="http://opensource.org/licenses/MIT">MIT licence</a> for this repository, which is similar). Second, I pulled the full text from each post, along with the name of the author and the date. Third, I cleaned the text to remove unusual characters and formatting. Fourth, I generated a topic model using the latent Dirchlet allocation algorithm implemented MALLET (it&#39;s much faster that the pure R methods). I arbitrarily set the number of topics at 30 and generated one model with all posts from 2012-2013. Fifth, I computed a similarity matrix for the authors of each post based on the mixture of topics in each author&#39;s post. Sixth, I computed a k-means cluster analysis to assign each author into a group, based on the topics detected in their post. Seventh, I visualised the groups of authors with a network graph. Each step of the method has a corresponding file of R code in this repository. </p>
 
 <h2>Results</h2>
 
@@ -161,490 +163,534 @@ hr {
 
 <h4>Summary of the corpus</h4>
 
-<p>In the 2012-2013 corpus there are a total of 352,558 words in 622 blog posts by 370 unique authors. The author count is probably an underestimate as some posts are written by multiple people using a common affliation as the author name. There were fewer posts in 2013 (n = 273) compared to 2012 (n = 348), but the average length of the posts is slightly higher in 2013 (mean = 591) compared to 2012 (mean = 549). Here&#39;s a plot of the distribution of words per post by year:
+<p>In the 2012-2013 corpus there are a total of 352,558 words in 622 blog posts by 370 unique authors (as of 5pm EST 28 July 2013, a few more posts trickled in after this time, but this analysis is a weekend project, so it stops on a Sunday evening). The author count is probably an underestimate as some posts (<a href="http://www.dayofarchaeology.com/life-in-a-day-the-silchester-town-life-project/">like this very long one</a>) are written by multiple people using a common affiliation as the author name. There were fewer posts in 2013 (n = 273) compared to 2012 (n = 348), but the average length of the posts is slightly higher in 2013 (mean = 591) compared to 2012 (mean = 549). Here&#39;s a plot of the distribution of words per post by year:
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAmQAAAGICAMAAADYoQzqAAAAxlBMVEX9/v0AAAAAADoAAGYAOmYAOpAAZrYzMzM6AAA6ADo6AGY6OgA6OmY6OpA6ZmY6kNtmAABmADpmAGZmOgBmtttmtv9/f39/f5V/f6t/lcF/q9aQOgCQOjqQkGaQtpCQ2/+Vf3+VlcGVweurf6urlZWr1v+2ZgC2/7a2///BlX/BlZXBlavBwdbB6//Wq3/W///bkDrbkJDb25Db///l5eXrwZXr1qvr///y8vL/tmb/1qv/25D/68H//7b//9b//9v//+v///90nxsqAAAAQnRSTlP///////////////////////////////////////////////////////////////////////////////////////9pFP+NAAARCUlEQVR4nO2dDXsaxxWFgx0LJW0qOY5oZKVRi4tq16mgVagsKJL2//+pziwgYXYQsx/3zpnLeR+F2CLL3nPzzuwHu/BNQYgw36QugNiHkhFxKBkRh5IRcSgZEYeSEXEoGRGHkhFxKBkRh5IRcSgZEYeSEXEoGRGHkhFxKBkRh5IRcSgZEYeSEXFaSfY7GngVSQOXmJLZAy4xJbMHXGJKZg+4xJTMHnCJKZk94BJTMnvAJaZk9oBLTMnsAZeYktkDLjElswdcYkpmD7jElMwecIkpmT3gElMye8AlpmTm6Pf7qUvYgpKZo19QMm3wKhLGhGTXg8Gf/+Ue3cNXj5QMAwuSPf7TCzU7v936oWQgWJDs/u9/HbwvpsPi/sN489E9NXC8uCxRwEmWuoQIXpZs9vO4mI6mo+Lx83jzcfV06lFTAa8iaYwcXc6GwZmMkkGA5lgDyWbDws1k3CfDxYBk/uhyWPDoEhcLkr1M6kAV8CqShpKpg1eRNJRMHbyKpKFk6uBVJA0lUwevImkomTp4FUlDydTBq0gaSqYOXkXSUDJ18CqShpKpg1eRNJRMHbyKpKFk6uBVJA0lUwevImkomTp4FUlDydTBq0gaSqYOXkXSUDJ18CqShpKpg1eRNJRMHbyKpKFk6uBVJA0lUwevImkomTp4FUlDydTBq0gaSqYOXkXS2JfsCxp4FUnTT13ANp1LlnrUVMCrSBr7M1nqQBXwKpKGkqmDV5E0lEwdvIqkoWTq4FUkDSVTB68iaSiZ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" alt="wpp"/></p>
 
-<h4>Here are the key words for the 30 topics generated by the LDA model:</h4>
+<h4>Summary of the topic model</h4>
 
-<p>[1] &ldquo;excavation field area stone features ground excavations tools soil excavated test discovered campus feature involved surface high late story rock&rdquo;<br/>
- [2] &ldquo;field archaeologists past school professional interested ferry understanding favorite knowledge washington skills public farm individuals topic director communication screen interests&rdquo;
- [3] &ldquo;past cemetery landscape learn understand human questions interested modern interest ceramics lab early understanding water archaeologists places identify enjoy animal&rdquo;<br/>
- [4] &ldquo;digital access open archaeologists archive ads database online content reports director app text images center media free video system community&rdquo;<br/>
- [5] &ldquo;shelf ù&quot;ø laarc gallery objects ùsø archive number ù&quot;ù center lottery ø«ø ù.ù cooper ù<sup>ø</sup> ù.ø suggested orange object completely&rdquo;<br/>
- [6] &ldquo;rcahms copyright scotland survey chosen built aerial ordnance stone castle database crown favourite historic landscape north twitter photographs view scottish&rdquo;<br/>
- [7] &ldquo;cat circus making desk bag fort centre dig observatory urns click colchester house hat green cans uppsala unit system cremation&rdquo;<br/>
- [8] &ldquo;museum objects display finds exhibition object museums coins treasure metal history antiquities coin silver database hoard scheme material social british&rdquo;<br/>
- [9] &ldquo;shropshire hoard war space community bristol royalist detectorists bitterley veterans military graffiti county indigenous civil shrewsbury march garrison northern south&rdquo;<br/>
-[10] &ldquo;students community school dig volunteers student children learning people archaeologists visitors experience past involved history open events undergraduate learn training&rdquo;<br/>
-[11] &ldquo;historic planning environment county wright vitaemilia policy law council conservation ireland committee protection issues commercial dayofarch government means rescue potential&rdquo;<br/>
-[12] &ldquo;des une archã sur est pour dans qui nous prã ologie avec par mon journã moyen fouille inrap gallery intã&rdquo;<br/>
-[13] &ldquo;people itâ years world things lot interesting reading read blog write means donâ posts book head fun point canâ didnâ&rdquo;<br/>
-[14] &ldquo;house remains century years land houses area gardens bones family middle small brown occupied called ancient bottom industrial lake fields&rdquo;<br/>
-[15] &ldquo;material collection finds collections age excavations records artefacts iron years early excavated record pottery small late boxes box range archives&rdquo;<br/>
-[16] &ldquo;ancient museum cultural conference history social academic institute teaching writing australia dissertation living egypt city department society culture early museums&rdquo;<br/>
-[17] &ldquo;interesting norfolk mola centre talk programme colleague range wood visitor festival landscape dating assemblage building neolithic closely timbers lottery anglo-saxon&rdquo;<br/>
-[18] &ldquo;glass century assemblage cave island leather early mosaic interesting weâ fragments white ireland nails shoe beautiful preserved discovery vessel wild&rdquo;<br/>
-[19] &ldquo;building medieval digging buildings city small trench finds crew construction excavating walls early dig hot built wall dug road lots&rdquo;<br/>
-[20] &ldquo;war camp world monuments johnâ british battle institute italy rome statue memorial evans faraday spain photos knossos italian malta command&rdquo;<br/>
-[21] &ldquo;museum mound grave west creek curator complex facility group making stones corn garden native tour display interpretive manchester days incised&rdquo;<br/>
-[22] &ldquo;age church medieval bronze idaho iron palace ireland village early churches burials end burial farm national exmoor identified london coffin&rdquo;<br/>
-[23] &ldquo;che arqueologia archaeologyâ oday projeto dei montescudaio sambaqui progetto archeologia uma con modo delle allâ sono cubatã layer piã medievale&rdquo;<br/>
-[24] &ldquo;conservation models wessex pitt rivers lab model wiltshire south large salisbury figurines excavated wood service areas plaster scanning maritime damage&rdquo;<br/>
-[25] &ldquo;itâ week weâ office bit days morning writing started start things check process archaeologists spend thatâ recording lot full afternoon&rdquo;<br/>
-[26] &ldquo;phd human student bones ã???atalhã samples deer pottery bone turkey thesis worcester cake cardiff residues animal room neolithic collaboration difficult&rdquo;<br/>
-[27] &ldquo;survey gis record database understand aerial recording records laser maps wales photography photographic systems total world techniques form spatial film&rdquo;<br/>
-[28] &ldquo;los para por las con mã¡s arqueologã como arqueã day trabajo proyecto arqueolã desde este pero sobre expressly stated licensed&rdquo;<br/>
-[29] &ldquo;artifacts historic state historical public national park cultural arkansas lab history survey resources program african graduate philadelphia preservation pennsylvania unit&rdquo;<br/>
-[30] &ldquo;day work time project creative licensed commons stated license expressly attribution-sharealike unported working today year heritage archaeologist find local team&rdquo;</p>
+<p>Here are 50 key words for the 30 topics generated by the LDA model:</p>
 
-<p>We might ask what are the top five topics in the post by a certain author? For example, here we can see the mixture of topics in the posts by my friend and colleague Jacq Matthews:</p>
+<pre><code>&gt;[1] &quot;excavation field area stone features ground excavations tools soil excavated test discovered campus feature involved surface high late story rock bone level dating pit pits areas natural source survey structures photo forms excavate excavating flint larger located deposits open fragments trowel clear difficult geophysical floor image entire buried filled allowed&quot;                                                                                           
+ [2] &quot;field archaeologists past school professional interested ferry understanding favorite knowledge washington skills public farm individuals topic director communication screen interests responsibility profession experiences single popular article artifacts engage professionals macedonia academic real participation archeology band digs semester shows scientific future diversity enjoyed vcu unit sit civil pseudoarchaeology washingtonâ dig responsibilities&quot;
+ [3] &quot;past cemetery landscape learn understand human questions interested modern interest ceramics lab early understanding water archaeologists places identify enjoy animal record techniques bones common simply methods personal southern types lost studying simple reason helps program ceramic lives lack collecting communities othe lived step properly inside kids property locations surveying question&quot;                                                            
+ [4] &quot;digital access open archaeologists archive ads database online content reports director app text images center media free video system community linked library grey files visual literature metadata punk toronto scarf web order articles mobile videos create adding file mukurtu thousands cultural platform image publication dead filemaker databases edit asi created&quot;                                                                                           
+ [5] &quot;shelf ù&quot;ø laarc gallery objects ùsø archive number ù&quot;ù center lottery ø«ø ù.ù cooper ù^ø ù.ø suggested orange object completely metal registered piece dayofarch ùsù environmental discover random store øªø border solid width tweet margin auto float margin-top text-align img cfcfcf margin-left ù&quot;ù.ø weâ medieval excavated london message textile holdsâ&quot;                                                                                                        
+ [6] &quot;rcahms copyright scotland survey chosen built aerial ordnance stone castle database crown favourite historic landscape north twitter photographs view scottish loch fort record park south east images west wall water buildings structures photograph place myarchaeology.â canmore recorded visit revealed remains monuments timber image people history island stones century cropmarks location&quot;                                                                    
+ [7] &quot;cat circus making desk bag fort centre dig observatory urns click colchester house hat green cans uppsala unit system cremation contents high article mining ice common garden yellow editor utah cwa regular session magazine friend captains folkestone auckland hold renovation army avoid newsletter care drop warm military sardine taylorâ baseball&quot;                                                                                                              
+ [8] &quot;museum objects display finds exhibition object museums coins treasure metal history antiquities coin silver database hoard scheme material social british casts case cases interested items detecting stolen classical looting tile temporary create gold market pas museumâ north hertfordshire gallery portable conservation finder looted hitchin preserved story cast stories pot vessel&quot;                                                                           
+ [9] &quot;shropshire hoard war space community bristol royalist detectorists bitterley veterans military graffiti county indigenous civil shrewsbury march garrison northern south army territory communities ludlow contemporary earth parliamentarian wem paid country family worth spacecraft nter jawoyn club force aboriginal parliamentarians brampton similar system support significant messages men castle rights relic cavalry&quot;                                         
+[10] &quot;students community school dig volunteers student children learning people archaeologists visitors experience past involved history open events undergraduate learn training education workshops skills typical schools questions town activity weeks learned outreach science friends planning educational silchester class tour workshop pottery college gave talks teaching participants placement aim tours teach contribute&quot;                                        
+[11] &quot;historic planning environment county wright vitaemilia policy law council conservation ireland committee protection issues commercial dayofarch government means rescue potential dayofarchâ knowledge development board impact resources client records carried developer officers interest process buildings july works practice natural early national remains monitoring organisations sector officer sweden significance standards money organisation&quot;             
+[12] &quot;des une archã sur est pour dans qui nous prã ologie avec par mon journã moyen fouille inrap gallery intã aux vous occupation cette diagnostic mãªme aussi donnã ont fait muller-pelletier sols ologues ologique lors exceptionnelle ces siã vie ils carine scientifique sont vestiges tre couverte viarmes chã large questions&quot;                                                                                                                                         
+[13] &quot;people itâ years world things lot interesting reading read blog write means donâ posts book head fun point canâ didnâ list weeks fact ago career books share called degree ideas pieces position youâ kind stuff context theyâ thinking huge moving issues fit historical sitting resources person phd happened play talk&quot;                                                                                                                                              
+[14] &quot;house remains century years land houses area gardens bones family middle small brown occupied called ancient bottom industrial lake fields conditions sample garden base andâ living council estate church child cut destruction remaining teeth town college salt thin britain sea point farm fine green trees shown deposit market reach chapel&quot;                                                                                                                      
+[15] &quot;material collection finds collections age excavations records artefacts iron years early excavated record pottery small late boxes box range archives publication archive ago storage store documents drawings modern original individual colleague technology documentation created bronze assistant task extensive building published making researchers began remains hill photograph centre collected catalogue town&quot;                                               
+[16] &quot;ancient museum cultural conference history social academic institute teaching writing australia dissertation living egypt city department society culture early museums focused western published funding web science european past human discipline mentioned egyptian southern sciences interested eastern tomb humanities trip associate fellowship oxford universities included relevant professor on-line places materials world&quot;                                  
+[17] &quot;interesting norfolk mola centre talk programme colleague range wood visitor festival landscape dating assemblage building neolithic closely timbers lottery anglo-saxon species grave england services involved fund coastal cba hearth senior discussion review waterlogged flots bone identification reminded specialists scotland csi radiocarbon action thames manager artist crannog graves offer specialist biggest&quot;                                              
+[18] &quot;glass century assemblage cave island leather early mosaic interesting weâ fragments white ireland nails shoe beautiful preserved discovery vessel wild norse end mountains opening covered bowl vessels bay galway shoes visible quarters piece common colleague degrees share flood imagine ale lion segni sides harbour men drawing french economic dublin roads&quot;                                                                                                     
+[19] &quot;building medieval digging buildings city small trench finds crew construction excavating walls early dig hot built wall dug road lots street hole top urban inside weeks water brick library close heat town pottery fill samples deep food dates record pot block dark basement complex cleaning trenches experienced materials nearby pipe&quot;                                                                                                                           
+[20] &quot;war camp world monuments johnâ british battle institute italy rome statue memorial evans faraday spain photos knossos italian malta command cambridge half fig bomber papers figures gave monument raf shells doa involvement spanish boat shamanic latin neolithic materials activity idea campaign crete negatives monticello pow tests japanese palatine copenhagen ioa&quot;                                                                                             
+[21] &quot;museum mound grave west creek curator complex facility group making stones corn garden native tour display interpretive manchester days incised volunteers program gift room library consists culture museum.â slide documentary gcmac trays view flint burial film educational moundsville delf norona shop educator beads displays square visitors wonderful papers check care&quot;                                                                                       
+[22] &quot;age church medieval bronze idaho iron palace ireland village early churches burials end burial farm national exmoor identified london coffin sandpoint post-medieval cist cremation land parish viking stepney close houses population peat valley happy green skeleton surrounded swca holy horse symbolic mola live mound spread boundary wooden moorland peterborough appaloosa&quot;                                                                                     
+[23] &quot;che arqueologia archaeologyâ oday projeto dei montescudaio sambaqui progetto archeologia uma con modo delle allâ sono cubatã layer piã medievale montecorvino gli archeologi attraverso mio elementi pisa baldassarri post video cad museu prof sul virtual dellâ sia questo lavorare naturalmente essere disegno bassa material autocad base file vital joinville stico&quot;                                                                                               
+[24] &quot;conservation models wessex pitt rivers lab model wiltshire south large salisbury figurines excavated wood service areas plaster scanning maritime damage space materials equipment operation condition wreck paint cleaned surface general shopping treatment remove conserving imaging diving skeleton cleaning protected corrosion aim underwater scale fragile nightingale gallery heavy camera wooden loose&quot;                                                        
+[25] &quot;itâ week weâ office bit days morning writing started start things check process archaeologists spend thatâ recording lot full afternoon hours couple london pretty main short small end finished ready final finally call donâ half idea leave computer emails friday yesterday lunch current thereâ tea lots running youâ making finish&quot;                                                                                                                               
+[26] &quot;phd human student bones ã???atalhã samples deer pottery bone turkey thesis worcester cake cardiff residues animal room neolithic collaboration difficult animals hut faunal close worcestershire jaffa jebel writing suggested slag pots hive fallow bronze favourite supportive materials huge hike peak isotope analysing smith published phds fellow changing activity laboratory researcher&quot;                                                                          
+[27] &quot;survey gis record database understand aerial recording records laser maps wales photography photographic systems total world techniques form spatial film cross trees multiple tables english discussion hill processing leader landscapes valley involved software station scanner avon tree yorkshire field system relevant norwegian andâ fields medieval structure context generally computers entered&quot;                                                             
+[28] &quot;los para por las con mã¡s arqueologã como arqueã day trabajo proyecto arqueolã desde este pero sobre expressly stated licensed creative commons attribution-sharealike unported license logos muy todo mallou histã nos hoy patrimonio ser ver hora tiempo tengo dayofarch entre historia asã tambiã madrid video dos grupo vez soy logo&quot;                                                                                                                               
+[29] &quot;artifacts historic state historical public national park cultural arkansas lab history survey resources program african graduate philadelphia preservation pennsylvania unit states society native united artifact archeological county materials portion camp center property crm exhibit foundation bridge education century outreach findings station laboratory equipment curation assistant teach document americans preserve south&quot;                               
+[30] &quot;day work time project creative licensed commons stated license expressly attribution-sharealike unported working today year heritage archaeologist find local team job projects life post important public spent large group including report place number fieldwork exciting staff visit set july future members provide colleagues hard based present worked plan management reports&quot;
+</code></pre>
+
+<p>It should be pretty obvious that these topics are generated by a probabilistic algorithm rather than carefully organised by a person. For example, medieval churches and Idaho in topic 22 and the cat circus in topic 7 are rather dissonant combinations. However, many of the topics seem quite distinctive and coherent, such as 4, 6, and 20. A few topics seem to make sense as mixtures or <a href="http://journalofdigitalhumanities.org/2-1/words-alone-by-benjamin-m-schmidt/">chimera topics</a>, suggesting that a slightly higher number of topics might be more appropriate. Topic 25 is like an eerily garbled telegraphic text message from an unfortunate archaeologist chained to a desk (and is similar to Graham&#39;s <a href="http://graeworks.net/topic-model/doa2012/Topics/Topic17.html">topic 17</a> from 2012). Topics 28 and 30 are colophon topics dominated by the license that is attached to each post. With additional effort and time, such as analysing topic diagnostics and excluding more stopwords and non-noun parts of speech we may be able to refine the topic model. </p>
+
+<h4>Basic validation of the model</h4>
+
+<p>We can validate the model to a basic degree by closely reading a tiny random sample of the corpus to see if the model&#39;s classifications seem accurate. For example, here we can see the mixture of topics in the posts by my friend and colleague <a href="http://www.dayofarchaeology.com/author/jacquelinematthews/">Jacq Matthews</a>:</p>
 
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAmQAAAGICAMAAADYoQzqAAABdFBMVEX9/v0AAAAAADoAAFIAAGYALnMAOjoAOpAAUpEAZpAAZrYAv8Quc686AAA6AGY6OgA6OmY6OpA6kNtSAFJSkcxmAABmADpmAGZmOgBmZgBmZjpmtv9zLgBzLlJzc5F/f39/f5V/f6t/lZV/lcF/q6t/q9aQOgCQOjqQOmaQZgCQkDqQkLaQ2/+RUgCRzMyVf3+Vf5WVf6uVlZWVlauVlcGVq6uVq8GVq9aVwcGVweurf3+rf5Wrf6urlcGrq3+rq5Wrq6urq8GrwcGrweur1uur1v+vcy6vzMy2ZgC2Zjq225C2/7a2/9u2///BlX/BlZXBlavBq3/Bq6vBwZXB1sHB69bB6+vB6//MkVLMzJHMzK/MzMzWq3/Wq5XWq6vWwZXWwcHW1qvW68HW/9bW/+vW///bkDrb///l5eXrwZXrwavr1qvr68Hr6+vr/9br/+vr///y8vL4dm3/tmb/1qv/25D/68H//7b//9b//9v//+v///9L7mAHAAAAfHRSTlP/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////LGg1vAAAIABJREFUeJztfY2f3MZ5Xs5h69SK01Sp7DZMu5SpUz4qVzFLh1padJRI2zhpRFmxHKbmMvqgKWtthtqaq+OJ888XM+/HvDMYzALYGSzu+D4/m7oDMAMc5rk57DMPnvd3jEJRGb9z7AtQXH4oyRTVoSRTVIeSTFEdSjJFdSjJFNWhJFNUh5JMUR1KMkV1KMkU1aEkU1SHkkxRHUoyRXUoyRTVoSRTVIeSTFEdSjJFdSjJFNXxYpPs/lExg0u4P8ltVpIdeYCPewn3J7nNSrIjD/BxL+H+JLdZSXbkAT7uJdyf5DYryY48wMe9hPuT3GYl2ZEH+LiXcH+S26wkG4//+0f/8/ABPqiHX/zJycm/+7uDr6E2lGSj8S8nv3tskv3L792///3/fPA11IaSbCx+8d9/8d+OTTKL/60kmzcOG95ZkMxOZodeQ20oycZjDiT7/mEcuz/JbVaS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" alt="Jacq&#39;s topics"/></p>
 
-<h4>Here are the groups of authors. I arbitrarily set the number of groups at 30 (you can run the code yourself and change the number to see what happens). If there is a number after the name it&#39;s because that author has more than one post on the blog.</h4>
+<p>That seems pretty good, Jacq&#39;s 2012 post was about field work and her duties as an officer of the Australian Archaeological Association, while her 2013 post is more about social sciences and global cultural heritage.</p>
 
-<p>[[1]]
- [1] &ldquo;sarah_may1&rdquo;          &ldquo;Claire Bradshaw&rdquo;     &ldquo;MOLA.1&rdquo;<br/>
- [4] &ldquo;MOLA.6&rdquo;              &ldquo;David Gurney.3&rdquo;      &ldquo;MOLA.8&rdquo;<br/>
- [7] &ldquo;bajrjobs.4&rdquo;          &ldquo;EHZooarchaeologists&rdquo; &ldquo;Susan Greaney.1&rdquo;<br/>
-[10] &ldquo;Karen Stewart&rdquo;      </p>
+<p>And here&#39;s a graph of an interesting post by Ryan Baker on <a href="http://www.dayofarchaeology.com/aerial-survey-of-archaeological-excavations-using-quad-rotor-and-hex-rotor-aircraft-arch-aerial/">using small aerial drones for archaeological photography, survey and model-making</a>:</p>
 
-<p>[[2]]
- [1] &ldquo;Laracuente&rdquo;                 &ldquo;Declan Moore (Moore Group)&rdquo;
- [3] &ldquo;Emily Wright&rdquo;               &ldquo;Kelly Powell&rdquo;<br/>
- [5] &ldquo;JamesAlbone&rdquo;                &ldquo;David Gurney&rdquo;<br/>
- [7] &ldquo;Helen Wells&rdquo;                &ldquo;Ian Richardson&rdquo;<br/>
- [9] &ldquo;Paul McCulloch&rdquo;             &ldquo;MOLA.5&rdquo;<br/>
-[11] &ldquo;David Gurney.2&rdquo;             &ldquo;Dan Hull&rdquo;<br/>
-[13] &ldquo;ChrisCumberpatch&rdquo;           &ldquo;Charles Mount&rdquo;<br/>
-[15] &ldquo;sylvia.warman&rdquo;              &ldquo;Laura Belton&rdquo;<br/>
-[17] &ldquo;Robin Standring&rdquo;            &ldquo;Michelle Touton&rdquo;<br/>
-[19] &ldquo;Emily Wright.1&rdquo;             &ldquo;Chris Constable.1&rdquo;<br/>
-[21] &ldquo;Giles Carey&rdquo;                &ldquo;Roman Baths Museum.1&rdquo;<br/>
-[23] &ldquo;Manda Forster&rdquo;              &ldquo;Magnus Reuterdahl.1&rdquo;       </p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAmQAAAGICAMAAADYoQzqAAABWVBMVEX9/v0AAAAAADoAAFIAAGYAOjoAOpAAZpAAZrY6AAA6AGY6OgA6OmY6OpA6kNtSAFJmAABmADpmAGZmOgBmZgBmZjpmtv9zLlJzc5F/f39/f5V/f6t/lZV/lcF/q6t/q9aQOgCQOjqQOmaQZgCQkDqQkLaQ2/+RzMyVf3+Vf5WVf6uVlZWVlauVlcGVq6uVq8GVq9aVwcGVweurf3+rf5Wrf6urlcGrq3+rq5Wrq6urq8GrwcGrweur1uur1v+2ZgC2Zjq225C2/7a2/9u2///BlX/BlZXBlavBq3/Bq6vBwZXB1sHB69bB6+vB6//MkVLMzJHMzK/MzMzWq3/Wq5XWq6vWwZXWwcHW1qvW68HW/9bW/+vW///bkDrb///l5eXrwZXrwavr1qvr68Hr6+vr/9br/+vr///y8vL4dm3/tmb/1qv/25D/68H//7b//9b//9v//+v///+MOXKtAAAAc3RSTlP/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wolA8wAAIABJREFUeJztXeufG7d17aZqmqSt66StW0pR1n25rlUlMhUrdWIzfUiOE6fqg4ofipwwUWU2Xq/Wwv//oQPcBy4wGHKGHAxA8p5fsubOAHe4gyNweHBx7u8ZhSIzfq/0G1AcP5RkiuxQkimyQ0mmyA4lmSI7lGSK7FCSKbJDSabIDiWZIjuUZIrsUJIpskNJpsgOJZkiO5RkiuxQkimyQ0mmyA4lmSI7lGSK7Dhtkv3PyWOS26wkO21McpuVZKeNSW6zkuy0McltVpKdNia5zUqy08Ykt1lJVhL/9af/UPgdTHKblWQF8Z9nv68kO3qUHeD//qv//ksl2dGj8Aj/j5LsBFB4hJVkp4DCI6wkOwUUHmEl2Smg8AhXgElus5LstDHJbVaSnTYmuc1KstPGJLf5tEn2a4HglyT+b2uLgwriokxym5VkEw9tPUGUZNNA3vLfeeQc2nqCKMmmgbzlSrJsmJpkjx5uPr9awH8/Wl+99WRrtKjNR+uuhh3h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" alt="Ryan&#39;s topics"/></p>
 
-<p>[[3]]
- [1] &ldquo;Stephen Kay&rdquo;         &ldquo;Caroline Goodson&rdquo;    &ldquo;Alexandra Knox&rdquo;<br/>
- [4] &ldquo;dberryman&rdquo;           &ldquo;Valentina&rdquo;           &ldquo;MOLA.7&rdquo;<br/>
- [7] &ldquo;MOLA.9&rdquo;              &ldquo;michigan&rdquo;            &ldquo;Zsolt Magyar&rdquo;<br/>
-[10] &ldquo;Marcel Cornellissen&rdquo; &ldquo;dberryman.1&rdquo;         &ldquo;rrohe&rdquo;<br/>
-[13] &ldquo;talia_shay.1&rdquo;        &ldquo;MOLA.15&rdquo;             &ldquo;MOLA.20&rdquo;<br/>
-[16] &ldquo;MOLA.23&rdquo;             &ldquo;tuzusai2012&rdquo;         &ldquo;cornelius.1&rdquo;<br/>
-[19] &ldquo;tuzusai2012.1&rdquo;      </p>
+<p>A good classification, with high proportions of topic 24 that includes models, camera, figurines and equipment and topic 27 with survey, GIS and photography.</p>
 
-<p>[[4]]
-[1] &ldquo;cartvol.3&rdquo; &ldquo;MOLA.10&rdquo;   &ldquo;cartvol.7&rdquo; &ldquo;MOLA.14&rdquo;   &ldquo;cartvol.8&rdquo;</p>
+<p>And here we can see that <a href="http://www.dayofarchaeology.com/author/bennetts/">Sarah Bennett</a>, an archaeologist in Florida, made quite different posts in each year:</p>
 
-<p>[[5]]
- [1] &ldquo;Alan Simkins&rdquo;<br/>
- [2] &ldquo;RCAHMS.2&rdquo;<br/>
- [3] &ldquo;gabe&rdquo;<br/>
- [4] &ldquo;SUrachi.1&rdquo;<br/>
- [5] &ldquo;PalatineEastPotteryProject.1&rdquo;<br/>
- [6] &ldquo;Francesco Ripanti&rdquo;<br/>
- [7] &ldquo;David Gurney.4&rdquo;<br/>
- [8] &ldquo;Amesemi&rdquo;<br/>
- [9] &ldquo;Italian National Association of Archaeologists&rdquo;
-[10] &ldquo;edlyne&rdquo;<br/>
-[11] &ldquo;AMTTA&rdquo;<br/>
-[12] &ldquo;ffion&rdquo;<br/>
-[13] &ldquo;The Gabii Project&rdquo;<br/>
-[14] &ldquo;Stefano Costa.1&rdquo;<br/>
-[15] &ldquo;William Hafford&rdquo;<br/>
-[16] &ldquo;brennawalks&rdquo;<br/>
-[17] &ldquo;David Gill&rdquo;<br/>
-[18] &ldquo;lofttroll&rdquo;<br/>
-[19] &ldquo;Henriette Roued-Cunliffe.2&rdquo;<br/>
-[20] &ldquo;Bob Muckle.2&rdquo;                                  </p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAmQAAAGICAMAAADYoQzqAAABdFBMVEX9/v0AAAAAADoAAFIAAGYALnMAOjoAOpAAUpEAZpAAZrYAv8Quc686AAA6AGY6OgA6OmY6OpA6kNtSAFJSkcxmAABmADpmAGZmOgBmZgBmZjpmtv9zLgBzLlJzc5F/f39/f5V/f6t/lZV/lcF/q6t/q9aQOgCQOjqQOmaQZgCQkDqQkLaQ2/+RUgCRzMyVf3+Vf5WVf6uVlZWVlauVlcGVq6uVq8GVq9aVwcGVweurf3+rf5Wrf6urlcGrq3+rq5Wrq6urq8GrwcGrweur1uur1v+vcy6vzMy2ZgC2Zjq225C2/7a2/9u2///BlX/BlZXBlavBq3/Bq6vBwZXB1sHB69bB6+vB6//MkVLMzJHMzK/MzMzWq3/Wq5XWq6vWwZXWwcHW1qvW68HW/9bW/+vW///bkDrb///l5eXrwZXrwavr1qvr68Hr6+vr/9br/+vr///y8vL4dm3/tmb/1qv/25D/68H//7b//9b//9v//+v///9L7mAHAAAAfHRSTlP/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////LGg1vAAAIABJREFUeJztXY2f3EZ55qhbWlJomzbQ1rTr4Fz6FRpwDc6aGALJtulHHAIJpnhNPoyDF4yzjTfni+efr2bej3lnJM1K2hlJd36fHzh3kmak0zw3p33m0fN+wSgUhfGFqS9Acf6hJFMUh5JMURxKMkVxKMkUxaEkUxSHkkxRHEoyRXEoyRTFoSRTFIeSTFEcSjJFcSjJFMWhJFMUh5JMURxKMkVxKMkUxaEkUxTH002y25NiBpdwe5TbrCSbeICnvYTbo9xmJdnEAzztJdwe5TYrySYe4Gkv4fYot1lJNvEAT3sJt0e5zUqyiQd42ku4PcptVpINx//+5b8ePsAH9fDLbxwd/eF/HHwNpaEkG4xfHP3B1CT7xR/fvv2tvzr4GkpDSTYUv/z7X/7d1CSz+Hcl2bxx2PDOgmR2Mjv0GkpDSTYccyDZtw7j2O1RbrOSbDimJ9kvv3HQ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" alt="Sarah&#39;s topics"/></p>
 
-<p>[[6]]
- [1] &ldquo;carmean&rdquo;              &ldquo;Rachael Sparks&rdquo;       &ldquo;Heather Sebire&rdquo;<br/>
- [4] &ldquo;Amanda Brooks&rdquo;        &ldquo;Heather Cline&rdquo;        &ldquo;sdhaddow&rdquo;<br/>
- [7] &ldquo;Manchester Museum&rdquo;    &ldquo;Steve Compston&rdquo;       &ldquo;Martin Lominy&rdquo;<br/>
-[10] &ldquo;mcarra&rdquo;               &ldquo;David E. Rotenizer.1&rdquo; &ldquo;Dena Sedar&rdquo;<br/>
-[13] &ldquo;Heather Cline.1&rdquo;      &ldquo;NGO Archaeologica.2&rdquo;  &ldquo;Andrew Kirkland&rdquo;<br/>
-[16] &ldquo;Amanda Brooks.1&rdquo;     </p>
+<p>Sarah&#39;s 2013 post is about volunteers cleaning up a historic cemetery, which is nicely captured by topic 3. Topic 29 reflects the public volunteer aspect of the post. Sarah&#39;s 2012 post is about the excavation of a shell midden, clearly indicated by a high proportions of topic 1 and 20. Topic 20 is interesting because it seems mostly to be about the archaeology of war. We see &#39;shell&#39; and &#39;shells&#39; in topic 20 between the algorithm hasn&#39;t been able to distinguish between shells you eat and other kinds of shells (bombs, wrecked buildings, etc.). </p>
 
-<p>[[7]]
- [1] &ldquo;Susan Greaney&rdquo;                      &ldquo;Bolton Library and Museum Services&rdquo;
- [3] &ldquo;Sarah JaneHarknett.1&rdquo;               &ldquo;Shawn Graham.1&rdquo;<br/>
- [5] &ldquo;Laura Burnett&rdquo;                      &ldquo;William Hafford.1&rdquo;<br/>
- [7] &ldquo;Craig Barker&rdquo;                       &ldquo;Julie Cassidy&rdquo;<br/>
- [9] &ldquo;Laura Burnett.2&rdquo;                    &ldquo;Candace Richards&rdquo;                  </p>
+<p>While the topic model has a few comical and naive moments, my informal and brief validation indicates that it is clearly not complete nonsense and is credible as a representation of the corpus. Note that each time you replicate the generation of this model you get slightly different topics because of the probabilistic nature of topic modelling. </p>
 
-<p>[[8]]
-[1] &ldquo;cristiana&rdquo;             &ldquo;cristiana.1&rdquo;           &ldquo;Jaime Almansa Sánchez&rdquo;
-[4] &ldquo;Khawla Goussous&rdquo;       &ldquo;cartvol.4&rdquo;             &ldquo;archscotland&rdquo;<br/>
-[7] &ldquo;Cara Jones&rdquo;            &ldquo;Lorna Richardson.4&rdquo;    &ldquo;archscotland.1&rdquo;       </p>
+<h4>Visualisation of similar topics</h4>
 
-<p>[[9]]
- [1] &ldquo;Kevin Wooldridge&rdquo;                 &ldquo;David Standing&rdquo;<br/>
- [3] &ldquo;Jonathan Haller&rdquo;                  &ldquo;Kayt Armstrong&rdquo;<br/>
- [5] &ldquo;clydeandavon&rdquo;                     &ldquo;clydeandavon.1&rdquo;<br/>
- [7] &ldquo;RCAHMS.12&rdquo;                        &ldquo;Spencer Gavin Smith.1&rdquo;<br/>
- [9] &ldquo;Chiz Harward (Urban Archaeology)&rdquo; &ldquo;Jenny Ryder&rdquo;<br/>
-[11] &ldquo;RCAHMS.24&rdquo;                        &ldquo;Rosalind Buck&rdquo;<br/>
-[13] &ldquo;Cathy Dagg&rdquo;                       &ldquo;MOLA.11&rdquo;<br/>
-[15] &ldquo;Chris Green&rdquo;                      &ldquo;Aerial-Cam&rdquo;<br/>
-[17] &ldquo;ArcheoWebby.1&rdquo;                    &ldquo;popefinn&rdquo;<br/>
-[19] &ldquo;Paul&rdquo;                             &ldquo;Tom Goskar&rdquo;<br/>
-[21] &ldquo;Serra Head.1&rdquo;                     &ldquo;Andrew Mayfield.1&rdquo;<br/>
-[23] &ldquo;Giles Carey.1&rdquo;                    &ldquo;Spencer Gavin Smith.2&rdquo;           </p>
+<p>To get a sense of relationships amongst the topics we can visualize a hierarchical clustering of topics. Here we can see that the museum topics tend to form a group distinct from the others. Excavation and field archaeology form a high-level cluster as well as regional historical archaeology topics (on the far right). The majority of topics are quite similar to each other.</p>
 
-<p>[[10]]
- [1] &ldquo;Lorna Richardson&rdquo;   &ldquo;ArcheoWebby&rdquo;        &ldquo;Sophie Hay&rdquo;<br/>
- [4] &ldquo;saraperry&rdquo;          &ldquo;David Howell&rdquo;       &ldquo;Kayt Armstrong.1&rdquo;<br/>
- [7] &ldquo;Susan Johnston&rdquo;     &ldquo;Don Henson&rdquo;         &ldquo;Francesca Tronchin&rdquo;
-[10] &ldquo;Don Henson.2&rdquo;       &ldquo;MOLA.25&rdquo;            &ldquo;Kristina Killgrove&rdquo;</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA80AAALCCAMAAADTScGmAAAApVBMVEX9/v0AAAAAADkAAGUAOTkAOY8AZrU5AAA5ADk5AGU5OQA5OY85ZrU5j485j7U5j9plAABlADllAGVlOY9lZgBlZmVlj49ltbVltdpltf2POQCPOTmPOWWPZgCPjzmPj2WPj9qPtY+Ptf2P2/21ZgC1Zjm1ZmW1jzm1/rW1/tq1/v3ajznatWXa2/3a/rXa/tra/v39tWX9tbX924/9/rX9/tr9/v2yLh89AAAAN3RSTlP///////////////////////////////////////////////////////////////////////8AEFmdiwAAIABJREFUeJztnQub20h6nd0zVmsmm0TaOMlayia+iElsMfaqt1v9/39aCPDazTqnUAcfioXieR/vWBJJACRw6vJd/+bVGNMHf3PrCzDGBGE1G9MLVrMxvWA1G9MLVrMxvWA1G9MLVrMxvWA1G9MLVrMxvWA1G9MLVrMxvWA1G9MLVrMxvWA1G9MLVrMxvWA1G9MLVrMxvWA1G9MLVrMxvWA1G9MLVrMxvWA1G9MLVrMxvWA1G9MLVrMxvWA1G9MLVrMxvWA1G9MLVrMxvWA1G9MLVrMxvWA1G9MLVnPTPD3s+PX77k8/vz58+IHf+H++49e2D3vY549s9mczq8RqbpiXzwcdfsqo+eUz0+BRzQ8PX7KntJrXjNXcLjsBn2VI1cw1eFbzL99y57Sa14zV3C7bvfwGUX/4sVfzXmy7OfvT60Glg8Q3x/X48IfH/Ud/+aePR/Fu9wodZvrxxct3fducND7+aTzB+dPPH/crA/D6+PLwvt2xH5/GUWc7Zcwwy2A1N8tOv/t58ufXx+NK+1LNhyl39w8HNR8W5sM7tpcb5YOah4/t/uXqXecx4/jC6dPb84Z7//ov/+Hy9afTx097gtOxzQ2wmptlmO/Of7tS8/7lp3Hq3Bxm5t1/T0o/r8uPat7/4e279tr8NB7ocZx/9/8yfno39e4lnX59d0mP45vGi9n99zQ7f6r9W5kRq7lZRpmcuFLz7uXTHHih0L1kt5cWrws1//Lt+l27Az2+no988enDJnpzGgTevb4/5iDz07S/++/b6zYVsZqbJaPmw9J4fMv4z+Mm9rDy3V5uXt+o+fpd4yS/n2cP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" alt="cluster of topics"/></p>
 
-<p>[[11]]
- [1] &ldquo;Brian Kerr&rdquo;            &ldquo;bajrjobs&rdquo;              &ldquo;MOLA&rdquo;<br/>
- [4] &ldquo;Dawn McLaren&rdquo;          &ldquo;Somayyeh Mottaghi&rdquo;     &ldquo;Lorna Richardson.1&rdquo;<br/>
- [7] &ldquo;Dana Goodburn-Brown&rdquo;   &ldquo;James Morris&rdquo;          &ldquo;Dana Goodburn-Brown.2&rdquo;
-[10] &ldquo;Mike Heyworth&rdquo;         &ldquo;Anne Crone&rdquo;           </p>
+<h4>Comparison of topics in 2012 and 2013</h4>
 
-<p>[[12]]
- [1] &ldquo;sclements&rdquo;               &ldquo;Cath Poucher&rdquo;            &ldquo;cartvol.2&rdquo;<br/>
- [4] &ldquo;Carole Bancroft-Turner&rdquo;  &ldquo;Megan Rowland&rdquo;           &ldquo;Jaime Almansa Sánchez.5&rdquo;
- [7] &ldquo;Guy Hunt.1&rdquo;              &ldquo;judgec&rdquo;                  &ldquo;Don Henson.1&rdquo;<br/>
-[10] &ldquo;judgec.1&rdquo;                &ldquo;Sarah MacLean&rdquo;          </p>
+<p>We can get an impression of the shift in topics from 2012 to 2013 by comparing the average proportions of each topic across all documents for each year. The five topics that are the most different are 12, 28, 6, 18 and 23. Topics 12, 23 and 28 are non-English language topics, suggesting are greater international contribution in 2013. Topic 6 seems to reflect the large number of posts in 2013 by or about archaeologists working with the Royal Commission on the Ancient and Historical Monuments of Scotland.</p>
 
-<p>[[13]]
- [1] &ldquo;Chris Constable&rdquo;     &ldquo;Guy Hunt&rdquo;            &ldquo;Spencer Gavin Smith&rdquo;
- [4] &ldquo;Helen Williams&rdquo;      &ldquo;Alice Kershaw&rdquo;       &ldquo;Rena MacGuire&rdquo;<br/>
- [7] &ldquo;Rachel Ives.2&rdquo;       &ldquo;MOLA.18&rdquo;             &ldquo;Claire Woodhead.5&rdquo;<br/>
-[10] &ldquo;nikolah&rdquo;             &ldquo;Claire Woodhead.6&rdquo;   &ldquo;De Kogge&rdquo;           </p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAmQAAAGICAMAAADYoQzqAAABaFBMVEX9/v0AAAAAAC4AADoAAFIAAGYALnMAOmYAOpAAUpEAZrYAp/8AsPYAt+kAujgAvNgAvV8Av30Av8QAwJcAwK8uLnMuUpEuc685tgA6AAA6ADo6AGY6OpA6ZrY6kJA6kNtSAC5SAFJSUlJSkcxhnP9mAABmADpmAGZmOgBmOjpmOpBmZmZmtv9rsQBzLgBzLlJzc5Fzr8x/f39/f5V/f6t/lcF/q9aKqwCQOgCQOjqQOmaQZpCQkLaQtpCQ2/+RUgCRzJGRzMyVkP+VweujpQCrf6urlcGr1v+vcy6vzMy2ZgC2Zjq2/7a2//+3nwC5g//BlX/BlavBwdbB6//JmADMkVLMr3PMzJHMzK/MzMzTdv/Wq3/W///YkADbkDrbtmbb/7bb/9vb///lhwDl5eXna/PrwZXr///vf0ny8vL1ZOP4dm39YdH+bor/Yrz/Z6T/tmb/1qv/25D//7b//9b//9v//+v///+pz9U0AAAAeHRSTlP///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9RVfcBAAAXyElEQVR4nO2dDXvjxnWFw7pOHUVJk6apk3rTbevYbmOlaeiss27azYfiasPUjR3HiTfasu223Y9+cqWV8PcLkAR5hcEMAdx7ZgbkeR9Zq9VyjDlzXoIQHkL4TEEOkZ+2g9nYZzD/W5I5fsnmk5LbphujZIdJcE929YNHphujZIdJULKf37PdGCU7TEKSLY6MN0bJDpOQZNY7Mkp2oAQku/yW7REZJTtUApJdfMN6Y5TsMAke+FtDyQ4TSkbgUDICh5IROJSMwKFkBM7328FsjJIdJpSMwKFkBA4lI3DyluzBnrLX4R44NVKyFOx1OEqWB3sdjpLlwV6Ho2R5sNfhKFke7HW4XpLNJi+lvpAEvyCf/tVk8tmfPfjh5He+W/7tN3/24/o7UCKFa0lXfj15HbxVp0a/ZItXHpUfWq9ukKFkn3yuXPfXP/nsz8qPB59MfvfH6+9gtxopXHu6pWtInBr9kl3cemR9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" alt="difference in topics"/></p>
 
-<p>[[14]]
- [1] &ldquo;RCAHMS&rdquo;     &ldquo;RCAHMS.1&rdquo;   &ldquo;RCAHMS.3&rdquo;   &ldquo;RCAHMS.4&rdquo;   &ldquo;RCAHMS.5&rdquo;   &ldquo;RCAHMS.6&rdquo;<br/>
- [7] &ldquo;RCAHMS.7&rdquo;   &ldquo;RCAHMS.8&rdquo;   &ldquo;RCAHMS.9&rdquo;   &ldquo;RCAHMS.11&rdquo;  &ldquo;RCAHMS.13&rdquo;  &ldquo;RCAHMS.14&rdquo; 
-[13] &ldquo;RCAHMS.15&rdquo;  &ldquo;RCAHMS.17&rdquo;  &ldquo;RCAHMS.18&rdquo;  &ldquo;RCAHMS.19&rdquo;  &ldquo;RCAHMS.20&rdquo;  &ldquo;RCAHMS.21&rdquo; 
-[19] &ldquo;RCAHMS.22&rdquo;  &ldquo;RCAHMS.23&rdquo;  &ldquo;RCAHMS.25&rdquo;  &ldquo;RCAHMS.27&rdquo;  &ldquo;RCAHMS.28&rdquo;  &ldquo;RCAHMS.30&rdquo; 
-[25] &ldquo;RCAHMS.31&rdquo;  &ldquo;RCAHMS.32&rdquo;  &ldquo;RCAHMS.33&rdquo;  &ldquo;Garry Law&rdquo;  &ldquo;James Cole&rdquo; &ldquo;RCAHMS.34&rdquo; 
-[31] &ldquo;RCAHMS.36&rdquo;  &ldquo;RCAHMS.38&rdquo;  &ldquo;RCAHMS.39&rdquo;  &ldquo;RCAHMS.41&rdquo;  &ldquo;RCAHMS.43&rdquo; </p>
+<h4>Groups of similar authors</h4>
 
-<p>[[15]]
-[1] &ldquo;archaeologicalresearchcollective&rdquo; &ldquo;Tamira&rdquo;<br/>
-[3] &ldquo;cartvol.6&rdquo;                       </p>
+<p>Now that we&#39;ve established the credibility of the topic model, we can look at how authors group together according to the mixtures of topics in their posts. Here are the groups of authors I get after a k-means analysis on topic proportions. I arbitrarily set the number of groups at 30 (you can run the code yourself and change the number to see what happens). With additional effort we could <a href="http://stackoverflow.com/questions/15376075/cluster-analysis-in-r-determine-the-optimal-number-of-clusters/15376462#15376462">algorithmically determine the optimum number of groups</a>. If there is a number after the name it&#39;s because that author has more than one post on the blog. Reassuringly, most of the time we see multiple posts by the same author in the same cluster. Although we saw above that it&#39;s not always the case that one author writes about the same general mix of topics in their posts. </p>
 
-<p>[[16]]
-[1] &ldquo;Sandra LozanoRubio&rdquo;   &ldquo;Rmadgwick&rdquo;            &ldquo;Sandra LozanoRubio.1&rdquo;
-[4] &ldquo;Tim Young&rdquo;            &ldquo;Scott Haddow&rdquo;        </p>
+<pre><code>[[1]]
+ [1] &quot;sarah_may1&quot;          &quot;Claire Bradshaw&quot;     &quot;MOLA.1&quot;             
+ [4] &quot;MOLA.6&quot;              &quot;David Gurney.3&quot;      &quot;MOLA.8&quot;             
+ [7] &quot;bajrjobs.4&quot;          &quot;EHZooarchaeologists&quot; &quot;Susan Greaney.1&quot;    
+[10] &quot;Karen Stewart&quot;      
 
-<p>[[17]]
- [1] &ldquo;Ralph Mills&rdquo;           &ldquo;cartvol&rdquo;               &ldquo;cartvol.1&rdquo;<br/>
- [4] &ldquo;mmrathgaber&rdquo;           &ldquo;MOLA.3&rdquo;                &ldquo;<a href="mailto:brennawalks@gmail.com">brennawalks@gmail.com</a>&rdquo;
- [7] &ldquo;MOLA.12&rdquo;               &ldquo;Lynn Evans&rdquo;            &ldquo;Matt Law.3&rdquo;<br/>
-[10] &ldquo;Dave Wilton&rdquo;           &ldquo;april.beisaw&rdquo;          &ldquo;IUSB PAFS&rdquo;<br/>
-[13] &ldquo;MOLA.17&rdquo;               &ldquo;Claire Woodhead.4&rdquo;     &ldquo;MOLA.22&rdquo;<br/>
-[16] &ldquo;RCAHMS.37&rdquo;             &ldquo;Sue Carter&rdquo;            &ldquo;Lynn Evans.1&rdquo;<br/>
-[19] &ldquo;Sue Carter.1&rdquo;          &ldquo;Colleen Morgan&rdquo;       </p>
+[[2]]
+ [1] &quot;Laracuente&quot;                 &quot;Declan Moore (Moore Group)&quot;
+ [3] &quot;Emily Wright&quot;               &quot;Kelly Powell&quot;              
+ [5] &quot;JamesAlbone&quot;                &quot;David Gurney&quot;              
+ [7] &quot;Helen Wells&quot;                &quot;Ian Richardson&quot;            
+ [9] &quot;Paul McCulloch&quot;             &quot;MOLA.5&quot;                    
+[11] &quot;David Gurney.2&quot;             &quot;Dan Hull&quot;                  
+[13] &quot;ChrisCumberpatch&quot;           &quot;Charles Mount&quot;             
+[15] &quot;sylvia.warman&quot;              &quot;Laura Belton&quot;              
+[17] &quot;Robin Standring&quot;            &quot;Michelle Touton&quot;           
+[19] &quot;Emily Wright.1&quot;             &quot;Chris Constable.1&quot;         
+[21] &quot;Giles Carey&quot;                &quot;Roman Baths Museum.1&quot;      
+[23] &quot;Manda Forster&quot;              &quot;Magnus Reuterdahl.1&quot;       
 
-<p>[[18]]
- [1] &ldquo;Molly Swords&rdquo;              &ldquo;MOLA.2&rdquo;<br/>
- [3] &ldquo;RCAHMS.16&rdquo;                 &ldquo;Laura Puolamaki&rdquo;<br/>
- [5] &ldquo;Exmoorhistoricenvironment&rdquo; &ldquo;Molly Swords.1&rdquo;<br/>
- [7] &ldquo;Mary Petrich-Guy&rdquo;          &ldquo;Dot Boughton&rdquo;<br/>
- [9] &ldquo;Asa M Larsson&rdquo;             &ldquo;Rachel Ives&rdquo;              </p>
+[[3]]
+ [1] &quot;Stephen Kay&quot;         &quot;Caroline Goodson&quot;    &quot;Alexandra Knox&quot;     
+ [4] &quot;dberryman&quot;           &quot;Valentina&quot;           &quot;MOLA.7&quot;             
+ [7] &quot;MOLA.9&quot;              &quot;michigan&quot;            &quot;Zsolt Magyar&quot;       
+[10] &quot;Marcel Cornellissen&quot; &quot;dberryman.1&quot;         &quot;rrohe&quot;              
+[13] &quot;talia_shay.1&quot;        &quot;MOLA.15&quot;             &quot;MOLA.20&quot;            
+[16] &quot;MOLA.23&quot;             &quot;tuzusai2012&quot;         &quot;cornelius.1&quot;        
+[19] &quot;tuzusai2012.1&quot;      
 
-<p>[[19]]
-  [1] &ldquo;Waveney ValleyCommunityArchaeologyGroup&rdquo;<br/>
-  [2] &ldquo;Glynis Irwin&rdquo;<br/>
-  [3] &ldquo;David E. Rotenizer&rdquo;<br/>
-  [4] &ldquo;rbakerarae&rdquo;<br/>
-  [5] &ldquo;Keneiloe Molopyane&rdquo;<br/>
-  [6] &ldquo;Beth Pruitt&rdquo;<br/>
-  [7] &ldquo;Grace Krause&rdquo;<br/>
-  [8] &ldquo;Gail Boyle&rdquo;<br/>
-  [9] &ldquo;Sarah Bennett&rdquo;<br/>
- [10] &ldquo;Thiago Fossile&rdquo;<br/>
- [11] &ldquo;Peter Reavill&rdquo;<br/>
- [12] &ldquo;Scott Clark&rdquo;<br/>
- [13] &ldquo;Lancaster Williams&rdquo;<br/>
- [14] &ldquo;Jaime Almansa Sánchez.1&rdquo;<br/>
- [15] &ldquo;Jaime Almansa Sánchez.2&rdquo;<br/>
- [16] &ldquo;David Garcia Casas&rdquo;<br/>
- [17] &ldquo;Christine Morris&rdquo;<br/>
- [18] &ldquo;&rdquo;<br/>
- [19] &ldquo;Magnus Reuterdahl&rdquo;<br/>
- [20] &ldquo;April Beisaw&rdquo;<br/>
- [21] &ldquo;Tricia Jarratt&rdquo;<br/>
- [22] &ldquo;Anthroprobably&rdquo;<br/>
- [23] &ldquo;diacarco&rdquo;<br/>
- [24] &ldquo;EAAPP&rdquo;<br/>
- [25] &ldquo;Pedro MoyaMaleno&rdquo;<br/>
- [26] &ldquo;RCAHMS.10&rdquo;<br/>
- [27] &ldquo;Jaime Almansa Sánchez.3&rdquo;<br/>
- [28] &ldquo;Briana Pobiner&rdquo;<br/>
- [29] &ldquo;jbarnes9&rdquo;<br/>
- [30] &ldquo;David Gurney.1&rdquo;<br/>
- [31] &ldquo;Helen Keremedjiev&rdquo;<br/>
- [32] &ldquo;Bernard K. Means&rdquo;<br/>
- [33] &ldquo;Kelly Abbott&rdquo;<br/>
- [34] &ldquo;Charlotte Douglas&rdquo;<br/>
- [35] &ldquo;Manchester Museum.1&rdquo;<br/>
- [36] &ldquo;Adam Corsini.2&rdquo;<br/>
- [37] &ldquo;Kelly Abbott.1&rdquo;<br/>
- [38] &ldquo;INRAP&rdquo;<br/>
- [39] &ldquo;INRAP.1&rdquo;<br/>
- [40] &ldquo;drspacejunk&rdquo;<br/>
- [41] &ldquo;angela middleton&rdquo;<br/>
- [42] &ldquo;Sebastian Foxley&rdquo;<br/>
- [43] &ldquo;Kelly Abbott.2&rdquo;<br/>
- [44] &ldquo;Kelly Abbott.3&rdquo;<br/>
- [45] &ldquo;Claire Woodhead.2&rdquo;<br/>
- [46] &ldquo;INRAP.2&rdquo;<br/>
- [47] &ldquo;Michelle Zupan&rdquo;<br/>
- [48] &ldquo;magago&rdquo;<br/>
- [49] &ldquo;RCAHMS.26&rdquo;<br/>
- [50] &ldquo;Jaime Almansa Sánchez.4&rdquo;<br/>
- [51] &ldquo;RCAHMS.29&rdquo;<br/>
- [52] &ldquo;Giuliano De Felice&rdquo;<br/>
- [53] &ldquo;ArchaeoAD&rdquo;<br/>
- [54] &ldquo;Becky Wragg Sykes&rdquo;<br/>
- [55] &ldquo;Daniel Pett&rdquo;<br/>
- [56] &ldquo;Lorna Richardson.2&rdquo;<br/>
- [57] &ldquo;Lorna Richardson.3&rdquo;<br/>
- [58] &ldquo;Lorna Richardson.5&rdquo;<br/>
- [59] &ldquo;Lorna Richardson.6&rdquo;<br/>
- [60] &ldquo;Lorna Richardson.7&rdquo;<br/>
- [61] &ldquo;Lorna Richardson.8&rdquo;<br/>
- [62] &ldquo;Todd Whitelaw&rdquo;<br/>
- [63] &ldquo;Valentina.1&rdquo;<br/>
- [64] &ldquo;Simone82&rdquo;<br/>
- [65] &ldquo;Andrea&rdquo;<br/>
- [66] &ldquo;Elizabeth Moore&rdquo;<br/>
- [67] &ldquo;Anabelle Castaño&rdquo;<br/>
- [68] &ldquo;Wessex Archaeology&rdquo;<br/>
- [69] &ldquo;Wessex Archaeology.1&rdquo;<br/>
- [70] &ldquo;Wessex Archaeology.2&rdquo;<br/>
- [71] &ldquo;Wessex Archaeology.3&rdquo;<br/>
- [72] &ldquo;AngelGreen&rdquo;<br/>
- [73] &ldquo;Laracuente.1&rdquo;<br/>
- [74] &ldquo;Christina O&#39;Regan&rdquo;<br/>
- [75] &ldquo;Italian National Association of Archaeologists.1&rdquo;<br/>
- [76] &ldquo;Janet Jones&rdquo;<br/>
- [77] &ldquo;Henriette Roued-Cunliffe&rdquo;<br/>
- [78] &ldquo;Sheena Payne-Lunn&rdquo;<br/>
- [79] &ldquo;Project Florence&rdquo;<br/>
- [80] &ldquo;Monrepos - Archaeological Research Centre and Museum for Human Behavioural Evolution.1&rdquo;
- [81] &ldquo;MOLA.13&rdquo;<br/>
- [82] &ldquo;Beverly Chiarulli&rdquo;<br/>
- [83] &ldquo;Richard O&#39;Brien&rdquo;<br/>
- [84] &ldquo;Evaristo Gestoso Rodriguez&rdquo;<br/>
- [85] &ldquo;AMTTA.1&rdquo;<br/>
- [86] &ldquo;Margie&rdquo;<br/>
- [87] &ldquo;Sarah Bennett.1&rdquo;<br/>
- [88] &ldquo;duncans&rdquo;<br/>
- [89] &ldquo;John Worth&rdquo;<br/>
- [90] &ldquo;Dana Goodburn-Brown.3&rdquo;<br/>
- [91] &ldquo;Beth Pruitt.1&rdquo;<br/>
- [92] &ldquo;NGO Archaeologica&rdquo;<br/>
- [93] &ldquo;Philadelphia Archaeological Forum.3&rdquo;<br/>
- [94] &ldquo;Ashley McCuistion&rdquo;<br/>
- [95] &ldquo;Marni Walter.1&rdquo;<br/>
- [96] &ldquo;AVenovcevs&rdquo;<br/>
- [97] &ldquo;AKOT Heritage&rdquo;<br/>
- [98] &ldquo;nashcl&rdquo;<br/>
- [99] &ldquo;michigan.1&rdquo;<br/>
-[100] &ldquo;David Standing.1&rdquo;<br/>
-[101] &ldquo;Robin Standring.1&rdquo;<br/>
-[102] &ldquo;Laura Griffin&rdquo;<br/>
-[103] &ldquo;John Worth.1&rdquo;<br/>
-[104] &ldquo;Bernard K. Means.1&rdquo;<br/>
-[105] &ldquo;Ian Richardson.1&rdquo;<br/>
-[106] &ldquo;aeadams83&rdquo;<br/>
-[107] &ldquo;cornelius&rdquo;<br/>
-[108] &ldquo;NGO Archaeologica.1&rdquo;<br/>
-[109] &ldquo;David Howell.1&rdquo;<br/>
-[110] &ldquo;hinesbuwf&rdquo;<br/>
-[111] &ldquo;eharchaeology&rdquo;<br/>
-[112] &ldquo;Damian Shiels&rdquo;<br/>
-[113] &ldquo;Peter Reavill.1&rdquo;<br/>
-[114] &ldquo;Peter Reavill.2&rdquo;<br/>
-[115] &ldquo;MOLA.16&rdquo;<br/>
-[116] &ldquo;Peter Reavill.3&rdquo;<br/>
-[117] &ldquo;Rachel Ives.1&rdquo;<br/>
-[118] &ldquo;Sophie Hay.1&rdquo;<br/>
-[119] &ldquo;Thomas Loebel&rdquo;<br/>
-[120] &ldquo;María José Figuerero&rdquo;<br/>
-[121] &ldquo;Carmen Ting&rdquo;<br/>
-[122] &ldquo;Peter Reavill.4&rdquo;<br/>
-[123] &ldquo;RCAHMS.35&rdquo;<br/>
-[124] &ldquo;MOLA.19&rdquo;<br/>
-[125] &ldquo;transit_monkey&rdquo;<br/>
-[126] &ldquo;ralphj&rdquo;<br/>
-[127] &ldquo;Peter Reavill.5&rdquo;<br/>
-[128] &ldquo;Emily Noel-Paton&rdquo;<br/>
-[129] &ldquo;Peter Reavill.6&rdquo;<br/>
-[130] &ldquo;Tim Young.1&rdquo;<br/>
-[131] &ldquo;Declan Moore (Moore Group).1&rdquo;<br/>
-[132] &ldquo;Liz Goodman&rdquo;<br/>
-[133] &ldquo;Gaye Nayton&rdquo;<br/>
-[134] &ldquo;John Worth.2&rdquo;<br/>
-[135] &ldquo;MOLA.24&rdquo;<br/>
-[136] &ldquo;alinelara&rdquo;<br/>
-[137] &ldquo;Claire Woodhead.7&rdquo;<br/>
-[138] &ldquo;RCAHMS.40&rdquo;<br/>
-[139] &ldquo;Peter Reavill.8&rdquo;<br/>
-[140] &ldquo;Cathy Dagg.1&rdquo;<br/>
-[141] &ldquo;Helen Williams.1&rdquo;<br/>
-[142] &ldquo;Charles Mount.1&rdquo;<br/>
-[143] &ldquo;murosv&rdquo;<br/>
-[144] &ldquo;Ferry&rdquo;<br/>
-[145] &ldquo;Grace Krause.1&rdquo;<br/>
-[146] &ldquo;hinesbuwf.1&rdquo;<br/>
-[147] &ldquo;David Hunter&rdquo;<br/>
-[148] &ldquo;Peter Reavill.9&rdquo;                                                                       </p>
+[[4]]
+[1] &quot;cartvol.3&quot; &quot;MOLA.10&quot;   &quot;cartvol.7&quot; &quot;MOLA.14&quot;   &quot;cartvol.8&quot;
 
-<p>[[20]]
- [1] &ldquo;Matt Law&rdquo;               &ldquo;alexism&rdquo;                &ldquo;SUrachi&rdquo;<br/>
- [4] &ldquo;Rob Hedge&rdquo;              &ldquo;Claire Woodhead&rdquo;        &ldquo;Matt Law.1&rdquo;<br/>
- [7] &ldquo;Rebecca&rdquo;                &ldquo;castlesandcoprolites&rdquo;   &ldquo;Matt Law.2&rdquo;<br/>
-[10] &ldquo;Dana Goodburn-Brown.1&rdquo;  &ldquo;Melonie Shier&rdquo;          &ldquo;David Osborne&rdquo;<br/>
-[13] &ldquo;eastoxford&rdquo;             &ldquo;DeborahFox&rdquo;             &ldquo;Liza Kavanagh&rdquo;<br/>
-[16] &ldquo;Joe Flatman&rdquo;            &ldquo;Pat Hadley&rdquo;             &ldquo;long1086&rdquo;<br/>
-[19] &ldquo;Hembo Pagi&rdquo;             &ldquo;Stu Eve&rdquo;                &ldquo;Andy Dufton&rdquo;<br/>
-[22] &ldquo;Sara Perry&rdquo;             &ldquo;Allison Mickel&rdquo;         &ldquo;Richard Madgwick&rdquo;<br/>
-[25] &ldquo;Alice Forward&rdquo;          &ldquo;Jacqui Mulville&rdquo;        &ldquo;castlesandcoprolites.1&rdquo;
-[28] &ldquo;Don Henson.3&rdquo;          </p>
+[[5]]
+ [1] &quot;Alan Simkins&quot;                                  
+ [2] &quot;RCAHMS.2&quot;                                      
+ [3] &quot;gabe&quot;                                          
+ [4] &quot;SUrachi.1&quot;                                     
+ [5] &quot;PalatineEastPotteryProject.1&quot;                  
+ [6] &quot;Francesco Ripanti&quot;                             
+ [7] &quot;David Gurney.4&quot;                                
+ [8] &quot;Amesemi&quot;                                       
+ [9] &quot;Italian National Association of Archaeologists&quot;
+[10] &quot;edlyne&quot;                                        
+[11] &quot;AMTTA&quot;                                         
+[12] &quot;ffion&quot;                                         
+[13] &quot;The Gabii Project&quot;                             
+[14] &quot;Stefano Costa.1&quot;                               
+[15] &quot;William Hafford&quot;                               
+[16] &quot;brennawalks&quot;                                   
+[17] &quot;David Gill&quot;                                    
+[18] &quot;lofttroll&quot;                                     
+[19] &quot;Henriette Roued-Cunliffe.2&quot;                    
+[20] &quot;Bob Muckle.2&quot;                                  
 
-<p>[[21]]
- [1] &ldquo;CAT&rdquo;<br/>
- [2] &ldquo;CoDA_ucb.3&rdquo;<br/>
- [3] &ldquo;bajrjobs.1&rdquo;<br/>
- [4] &ldquo;Carly Hilts, Current Archaeology/Current World Archaeology&rdquo;<br/>
- [5] &ldquo;Samantha Brown&rdquo;<br/>
- [6] &ldquo;bajrjobs.2&rdquo;<br/>
- [7] &ldquo;bajrjobs.3&rdquo;<br/>
- [8] &ldquo;Annie Partridge&rdquo;<br/>
- [9] &ldquo;F.R.A.G.&rdquo;<br/>
-[10] &ldquo;Christopher Merritt&rdquo;<br/>
-[11] &ldquo;Monrepos - Archaeological Research Centre and Museum for Human Behavioural Evolution&rdquo;
-[12] &ldquo;Anne Jensen&rdquo;<br/>
-[13] &ldquo;Xtinebean&rdquo;<br/>
-[14] &ldquo;Nancy Grace&rdquo;<br/>
-[15] &ldquo;Carl Carlson-Drexler&rdquo;<br/>
-[16] &ldquo;Matthew Jones&rdquo;<br/>
-[17] &ldquo;Carly Hilts, Current Archaeology/Current World Archaeology.1&rdquo;<br/>
-[18] &ldquo;Terry Brock&rdquo;<br/>
-[19] &ldquo;MOLA.21&rdquo;<br/>
-[20] &ldquo;Robyn Antanovskii&rdquo;<br/>
-[21] &ldquo;izoken&rdquo;<br/>
-[22] &ldquo;Geoff Wyatt&rdquo;                                                                         </p>
+[[6]]
+ [1] &quot;carmean&quot;              &quot;Rachael Sparks&quot;       &quot;Heather Sebire&quot;      
+ [4] &quot;Amanda Brooks&quot;        &quot;Heather Cline&quot;        &quot;sdhaddow&quot;            
+ [7] &quot;Manchester Museum&quot;    &quot;Steve Compston&quot;       &quot;Martin Lominy&quot;       
+[10] &quot;mcarra&quot;               &quot;David E. Rotenizer.1&quot; &quot;Dena Sedar&quot;          
+[13] &quot;Heather Cline.1&quot;      &quot;NGO Archaeologica.2&quot;  &quot;Andrew Kirkland&quot;     
+[16] &quot;Amanda Brooks.1&quot;     
 
-<p>[[22]]
- [1] &ldquo;Darlene Applegate&rdquo;                   &ldquo;Sean Naleimaile&rdquo;<br/>
- [3] &ldquo;Mandy Ranslow&rdquo;                       &ldquo;Jamie Chad Brandon&rdquo;<br/>
- [5] &ldquo;John Lowe&rdquo;                           &ldquo;cdrexler&rdquo;<br/>
- [7] &ldquo;Nicole Bucchino&rdquo;                     &ldquo;Sean Naleimaile.1&rdquo;<br/>
- [9] &ldquo;cames&rdquo;                               &ldquo;Claire vanNierop&rdquo;<br/>
-[11] &ldquo;gwynn henderson&rdquo;                     &ldquo;Glynis Irwin.1&rdquo;<br/>
-[13] &ldquo;Philadelphia Archaeological Forum&rdquo;   &ldquo;Philadelphia Archaeological Forum.1&rdquo;
-[15] &ldquo;Philadelphia Archaeological Forum.2&rdquo; &ldquo;Philadelphia Archaeological Forum.4&rdquo;
-[17] &ldquo;John Lowe.1&rdquo;                         &ldquo;Mandy Ranslow.1&rdquo;<br/>
-[19] &ldquo;Kurt Thomas Hunt&rdquo;                    &ldquo;Valerie M. J. Hall&rdquo;<br/>
-[21] &ldquo;Rebecca Duggan&rdquo;                      &ldquo;Lucy Johnson&rdquo;<br/>
-[23] &ldquo;Jamie Chad Brandon.1&rdquo;               </p>
+[[7]]
+ [1] &quot;Susan Greaney&quot;                      &quot;Bolton Library and Museum Services&quot;
+ [3] &quot;Sarah JaneHarknett.1&quot;               &quot;Shawn Graham.1&quot;                    
+ [5] &quot;Laura Burnett&quot;                      &quot;William Hafford.1&quot;                 
+ [7] &quot;Craig Barker&quot;                       &quot;Julie Cassidy&quot;                     
+ [9] &quot;Laura Burnett.2&quot;                    &quot;Candace Richards&quot;                  
 
-<p>[[23]]
- [1] &ldquo;SuccinctBill&rdquo;           &ldquo;Doug&rdquo;                   &ldquo;CoDA_ucb&rdquo;<br/>
- [4] &ldquo;Russell Alleen-Willems&rdquo; &ldquo;Shawn Graham&rdquo;           &ldquo;CoDA_ucb.1&rdquo;<br/>
- [7] &ldquo;Leigh Anne&rdquo;             &ldquo;CoDA_ucb.2&rdquo;             &ldquo;CoDA_ucb.4&rdquo;<br/>
-[10] &ldquo;Beatrice Hopkinson&rdquo;     &ldquo;CoDA_ucb.5&rdquo;             &ldquo;Neil Gevaux&rdquo;<br/>
-[13] &ldquo;APAAME&rdquo;                 &ldquo;Andrew Reinhard&rdquo;        &ldquo;Ray Moore&rdquo;<br/>
-[16] &ldquo;cejo&rdquo;                   &ldquo;Doug.1&rdquo;                 &ldquo;Ulla Rajala&rdquo;<br/>
-[19] &ldquo;Eric Kansa&rdquo;             &ldquo;Shawn Graham.2&rdquo;         &ldquo;emmajaneoriordan&rdquo;<br/>
-[22] &ldquo;ADS&rdquo;                    &ldquo;Ethan Watrall&rdquo;          &ldquo;Andrew Reinhard.1&rdquo;<br/>
-[25] &ldquo;Kasia&rdquo;                  &ldquo;emmajaneoriordan.1&rdquo;     &ldquo;Kasia.1&rdquo;               </p>
+[[8]]
+[1] &quot;cristiana&quot;             &quot;cristiana.1&quot;           &quot;Jaime Almansa Sánchez&quot;
+[4] &quot;Khawla Goussous&quot;       &quot;cartvol.4&quot;             &quot;archscotland&quot;         
+[7] &quot;Cara Jones&quot;            &quot;Lorna Richardson.4&quot;    &quot;archscotland.1&quot;       
 
-<p>[[24]]
- [1] &ldquo;Francis Deblauwe&rdquo;           &ldquo;Jacq Matthews&rdquo;<br/>
- [3] &ldquo;Kathryn E. Piquette&rdquo;        &ldquo;Bob Muckle&rdquo;<br/>
- [5] &ldquo;Mark Patton&rdquo;                &ldquo;johnwillimas&rdquo;<br/>
- [7] &ldquo;SuzieThomas&rdquo;                &ldquo;cristiana.2&rdquo;<br/>
- [9] &ldquo;Kelly M&rdquo;                    &ldquo;Becky Wragg Sykes.1&rdquo;<br/>
-[11] &ldquo;Alex Nagel&rdquo;                 &ldquo;Udjahorresnet&rdquo;<br/>
-[13] &ldquo;Kathryn E. Piquette.1&rdquo;      &ldquo;Diefenerfer.1&rdquo;<br/>
-[15] &ldquo;Nancy Lovell&rdquo;               &ldquo;bupap&rdquo;<br/>
-[17] &ldquo;terhi&rdquo;                      &ldquo;Henriette Roued-Cunliffe.1&rdquo;
-[19] &ldquo;Axel G. Posluschny&rdquo;         &ldquo;Bob Muckle.1&rdquo;<br/>
-[21] &ldquo;ArchaeoAD.1&rdquo;                &ldquo;Melanie Pitkin&rdquo;            </p>
+[[9]]
+ [1] &quot;Kevin Wooldridge&quot;                 &quot;David Standing&quot;                  
+ [3] &quot;Jonathan Haller&quot;                  &quot;Kayt Armstrong&quot;                  
+ [5] &quot;clydeandavon&quot;                     &quot;clydeandavon.1&quot;                  
+ [7] &quot;RCAHMS.12&quot;                        &quot;Spencer Gavin Smith.1&quot;           
+ [9] &quot;Chiz Harward (Urban Archaeology)&quot; &quot;Jenny Ryder&quot;                     
+[11] &quot;RCAHMS.24&quot;                        &quot;Rosalind Buck&quot;                   
+[13] &quot;Cathy Dagg&quot;                       &quot;MOLA.11&quot;                         
+[15] &quot;Chris Green&quot;                      &quot;Aerial-Cam&quot;                      
+[17] &quot;ArcheoWebby.1&quot;                    &quot;popefinn&quot;                        
+[19] &quot;Paul&quot;                             &quot;Tom Goskar&quot;                      
+[21] &quot;Serra Head.1&quot;                     &quot;Andrew Mayfield.1&quot;               
+[23] &quot;Giles Carey.1&quot;                    &quot;Spencer Gavin Smith.2&quot;           
 
-<p>[[25]]
- [1] &ldquo;Adam Corsini&rdquo;        &ldquo;Adam Corsini.1&rdquo;      &ldquo;Adam Corsini.3&rdquo;<br/>
- [4] &ldquo;Adam Corsini.4&rdquo;      &ldquo;Adam Corsini.5&rdquo;      &ldquo;Marcel Dallinger&rdquo;<br/>
- [7] &ldquo;Pippa Pearce&rdquo;        &ldquo;CooperCenter&rdquo;        &ldquo;Andrew Fetherston&rdquo;<br/>
-[10] &ldquo;Lucy Sawyer&rdquo;         &ldquo;Andrew Fetherston.1&rdquo; &ldquo;CooperCenter.1&rdquo;<br/>
-[13] &ldquo;Andrew Fetherston.2&rdquo; &ldquo;Andrew Fetherston.3&rdquo; &ldquo;fieldwork&rdquo;<br/>
-[16] &ldquo;Andrew Fetherston.4&rdquo; &ldquo;Andrew Fetherston.5&rdquo;</p>
+[[10]]
+ [1] &quot;Lorna Richardson&quot;   &quot;ArcheoWebby&quot;        &quot;Sophie Hay&quot;        
+ [4] &quot;saraperry&quot;          &quot;David Howell&quot;       &quot;Kayt Armstrong.1&quot;  
+ [7] &quot;Susan Johnston&quot;     &quot;Don Henson&quot;         &quot;Francesca Tronchin&quot;
+[10] &quot;Don Henson.2&quot;       &quot;MOLA.25&quot;            &quot;Kristina Killgrove&quot;
 
-<p>[[26]]
- [1] &ldquo;Diefenerfer&rdquo;                &ldquo;Angela Piccini&rdquo;<br/>
- [3] &ldquo;Serra Head&rdquo;                 &ldquo;Ryan Swanson&rdquo;<br/>
- [5] &ldquo;PalatineEastPotteryProject&rdquo; &ldquo;magago.1&rdquo;<br/>
- [7] &ldquo;Mathias Probst&rdquo;             &ldquo;Jacq Matthews.1&rdquo;<br/>
- [9] &ldquo;Tanya Peres Lemons&rdquo;         &ldquo;cartvol.5&rdquo;<br/>
-[11] &ldquo;Lorna Richardson.10&rdquo;        &ldquo;FlindersArchSoc&rdquo;<br/>
-[13] &ldquo;tkriek&rdquo;                     &ldquo;Polly Peterson&rdquo;<br/>
-[15] &ldquo;Vasilka Dimitrovska&rdquo;       </p>
+[[11]]
+ [1] &quot;Brian Kerr&quot;            &quot;bajrjobs&quot;              &quot;MOLA&quot;                 
+ [4] &quot;Dawn McLaren&quot;          &quot;Somayyeh Mottaghi&quot;     &quot;Lorna Richardson.1&quot;   
+ [7] &quot;Dana Goodburn-Brown&quot;   &quot;James Morris&quot;          &quot;Dana Goodburn-Brown.2&quot;
+[10] &quot;Mike Heyworth&quot;         &quot;Anne Crone&quot;           
 
-<p>[[27]]
- [1] &ldquo;DavidAltoft&rdquo;               &ldquo;ssprince&rdquo;<br/>
- [3] &ldquo;Bairbre Mullee&rdquo;            &ldquo;Cayla Breiling&rdquo;<br/>
- [5] &ldquo;Sally Rodgers&rdquo;             &ldquo;Sarah JaneHarknett&rdquo;<br/>
- [7] &ldquo;Claire Woodhead.1&rdquo;         &ldquo;Alex Moseley&rdquo;<br/>
- [9] &ldquo;Samantha Colclough&rdquo;        &ldquo;Amanda Clarke&rdquo;<br/>
-[11] &ldquo;talia_shay&rdquo;                &ldquo;Marni Walter&rdquo;<br/>
-[13] &ldquo;Archaeology UFPI - BRAZIL&rdquo; &ldquo;Cara Jones.1&rdquo;<br/>
-[15] &ldquo;sarah_may1.1&rdquo;              &ldquo;Charlotte Douglas.1&rdquo;<br/>
-[17] &ldquo;Bairbre Mullee.1&rdquo;          &ldquo;Samantha Barnes&rdquo;<br/>
-[19] &ldquo;Hayley Forsyth&rdquo;            &ldquo;Brian&rdquo;<br/>
-[21] &ldquo;Joanne Robinson&rdquo;           &ldquo;LizzieW&rdquo;<br/>
-[23] &ldquo;bthorn&rdquo;                    &ldquo;Mike Pitts&rdquo;<br/>
-[25] &ldquo;Andrew Mayfield&rdquo;           &ldquo;Andrew Mayfield.2&rdquo;<br/>
-[27] &ldquo;Brian.1&rdquo;                  </p>
+[[12]]
+ [1] &quot;sclements&quot;               &quot;Cath Poucher&quot;            &quot;cartvol.2&quot;              
+ [4] &quot;Carole Bancroft-Turner&quot;  &quot;Megan Rowland&quot;           &quot;Jaime Almansa Sánchez.5&quot;
+ [7] &quot;Guy Hunt.1&quot;              &quot;judgec&quot;                  &quot;Don Henson.1&quot;           
+[10] &quot;judgec.1&quot;                &quot;Sarah MacLean&quot;          
 
-<p>[[28]]
- [1] &ldquo;Alfred W. Bowers Laboratory of Anthropology&rdquo;
- [2] &ldquo;Stefano Costa&rdquo;<br/>
- [3] &ldquo;Penny Johnston&rdquo;<br/>
- [4] &ldquo;Frank Lynam&rdquo;<br/>
- [5] &ldquo;MOLA.4&rdquo;<br/>
- [6] &ldquo;Lorna Richardson.9&rdquo;<br/>
- [7] &ldquo;Helen Sharp&rdquo;<br/>
- [8] &ldquo;FALSE&rdquo;<br/>
- [9] &ldquo;Rachael Sparks.1&rdquo;<br/>
-[10] &ldquo;Claire Woodhead.3&rdquo;<br/>
-[11] &ldquo;Roman Baths Museum&rdquo;<br/>
-[12] &ldquo;sven&rdquo;<br/>
-[13] &ldquo;Dawn McLaren.1&rdquo;<br/>
-[14] &ldquo;RCAHMS.42&rdquo;                                  </p>
+[[13]]
+ [1] &quot;Chris Constable&quot;     &quot;Guy Hunt&quot;            &quot;Spencer Gavin Smith&quot;
+ [4] &quot;Helen Williams&quot;      &quot;Alice Kershaw&quot;       &quot;Rena MacGuire&quot;      
+ [7] &quot;Rachel Ives.2&quot;       &quot;MOLA.18&quot;             &quot;Claire Woodhead.5&quot;  
+[10] &quot;nikolah&quot;             &quot;Claire Woodhead.6&quot;   &quot;De Kogge&quot;           
 
-<p>[[29]]
- [1] &ldquo;Bob Clarke&rdquo;                         &ldquo;Chiz Harward (Urban Archaeology).1&rdquo;
- [3] &ldquo;Katy Meyers&rdquo;                        &ldquo;Rose&rdquo;<br/>
- [5] &ldquo;mwilliams&rdquo;                          &ldquo;Nicola Hembrey&rdquo;<br/>
- [7] &ldquo;Helen Goodchild&rdquo;                    &ldquo;Sue Harrington&rdquo;<br/>
- [9] &ldquo;Kasia.2&rdquo;                            &ldquo;jpalmer&rdquo;<br/>
-[11] &ldquo;Stefan Sagrott&rdquo;                    </p>
+[[14]]
+ [1] &quot;RCAHMS&quot;     &quot;RCAHMS.1&quot;   &quot;RCAHMS.3&quot;   &quot;RCAHMS.4&quot;   &quot;RCAHMS.5&quot;   &quot;RCAHMS.6&quot;  
+ [7] &quot;RCAHMS.7&quot;   &quot;RCAHMS.8&quot;   &quot;RCAHMS.9&quot;   &quot;RCAHMS.11&quot;  &quot;RCAHMS.13&quot;  &quot;RCAHMS.14&quot; 
+[13] &quot;RCAHMS.15&quot;  &quot;RCAHMS.17&quot;  &quot;RCAHMS.18&quot;  &quot;RCAHMS.19&quot;  &quot;RCAHMS.20&quot;  &quot;RCAHMS.21&quot; 
+[19] &quot;RCAHMS.22&quot;  &quot;RCAHMS.23&quot;  &quot;RCAHMS.25&quot;  &quot;RCAHMS.27&quot;  &quot;RCAHMS.28&quot;  &quot;RCAHMS.30&quot; 
+[25] &quot;RCAHMS.31&quot;  &quot;RCAHMS.32&quot;  &quot;RCAHMS.33&quot;  &quot;Garry Law&quot;  &quot;James Cole&quot; &quot;RCAHMS.34&quot; 
+[31] &quot;RCAHMS.36&quot;  &quot;RCAHMS.38&quot;  &quot;RCAHMS.39&quot;  &quot;RCAHMS.41&quot;  &quot;RCAHMS.43&quot; 
 
-<p>[[30]]
- [1] &ldquo;SusanneT&rdquo;                     &ldquo;adamrabinowitz&rdquo;<br/>
- [3] &ldquo;Donna Yates&rdquo;                  &ldquo;Eleanor Ghey&rdquo;<br/>
- [5] &ldquo;Keith Fitzpatrick-Matthews&rdquo;   &ldquo;phdiva&rdquo;<br/>
- [7] &ldquo;Keith Fitzpatrick-Matthews.1&rdquo; &ldquo;Laura Burnett.1&rdquo;<br/>
- [9] &ldquo;Charlotte Dixon&rdquo;              &ldquo;Peter Reavill.7&rdquo;<br/>
-[11] &ldquo;Keith Fitzpatrick-Matthews.2&rdquo; &ldquo;Wendy Scott&rdquo;                 </p>
+[[15]]
+[1] &quot;archaeologicalresearchcollective&quot; &quot;Tamira&quot;                          
+[3] &quot;cartvol.6&quot;                       
 
-<p>Here is a static visualisation of the relationship between all the authors:
+[[16]]
+[1] &quot;Sandra LozanoRubio&quot;   &quot;Rmadgwick&quot;            &quot;Sandra LozanoRubio.1&quot;
+[4] &quot;Tim Young&quot;            &quot;Scott Haddow&quot;        
+
+[[17]]
+ [1] &quot;Ralph Mills&quot;           &quot;cartvol&quot;               &quot;cartvol.1&quot;            
+ [4] &quot;mmrathgaber&quot;           &quot;MOLA.3&quot;                &quot;brennawalks@gmail.com&quot;
+ [7] &quot;MOLA.12&quot;               &quot;Lynn Evans&quot;            &quot;Matt Law.3&quot;           
+[10] &quot;Dave Wilton&quot;           &quot;april.beisaw&quot;          &quot;IUSB PAFS&quot;            
+[13] &quot;MOLA.17&quot;               &quot;Claire Woodhead.4&quot;     &quot;MOLA.22&quot;              
+[16] &quot;RCAHMS.37&quot;             &quot;Sue Carter&quot;            &quot;Lynn Evans.1&quot;         
+[19] &quot;Sue Carter.1&quot;          &quot;Colleen Morgan&quot;       
+
+[[18]]
+ [1] &quot;Molly Swords&quot;              &quot;MOLA.2&quot;                   
+ [3] &quot;RCAHMS.16&quot;                 &quot;Laura Puolamaki&quot;          
+ [5] &quot;Exmoorhistoricenvironment&quot; &quot;Molly Swords.1&quot;           
+ [7] &quot;Mary Petrich-Guy&quot;          &quot;Dot Boughton&quot;             
+ [9] &quot;Asa M Larsson&quot;             &quot;Rachel Ives&quot;              
+
+[[19]]
+  [1] &quot;Waveney ValleyCommunityArchaeologyGroup&quot;                                               
+  [2] &quot;Glynis Irwin&quot;                                                                          
+  [3] &quot;David E. Rotenizer&quot;                                                                    
+  [4] &quot;rbakerarae&quot;                                                                            
+  [5] &quot;Keneiloe Molopyane&quot;                                                                    
+  [6] &quot;Beth Pruitt&quot;                                                                           
+  [7] &quot;Grace Krause&quot;                                                                          
+  [8] &quot;Gail Boyle&quot;                                                                            
+  [9] &quot;Sarah Bennett&quot;                                                                         
+ [10] &quot;Thiago Fossile&quot;                                                                        
+ [11] &quot;Peter Reavill&quot;                                                                         
+ [12] &quot;Scott Clark&quot;                                                                           
+ [13] &quot;Lancaster Williams&quot;                                                                    
+ [14] &quot;Jaime Almansa Sánchez.1&quot;                                                               
+ [15] &quot;Jaime Almansa Sánchez.2&quot;                                                               
+ [16] &quot;David Garcia Casas&quot;                                                                    
+ [17] &quot;Christine Morris&quot;                                                                      
+ [18] &quot;&quot;                                                                                      
+ [19] &quot;Magnus Reuterdahl&quot;                                                                     
+ [20] &quot;April Beisaw&quot;                                                                          
+ [21] &quot;Tricia Jarratt&quot;                                                                        
+ [22] &quot;Anthroprobably&quot;                                                                        
+ [23] &quot;diacarco&quot;                                                                              
+ [24] &quot;EAAPP&quot;                                                                                 
+ [25] &quot;Pedro MoyaMaleno&quot;                                                                      
+ [26] &quot;RCAHMS.10&quot;                                                                             
+ [27] &quot;Jaime Almansa Sánchez.3&quot;                                                               
+ [28] &quot;Briana Pobiner&quot;                                                                        
+ [29] &quot;jbarnes9&quot;                                                                              
+ [30] &quot;David Gurney.1&quot;                                                                        
+ [31] &quot;Helen Keremedjiev&quot;                                                                     
+ [32] &quot;Bernard K. Means&quot;                                                                      
+ [33] &quot;Kelly Abbott&quot;                                                                          
+ [34] &quot;Charlotte Douglas&quot;                                                                     
+ [35] &quot;Manchester Museum.1&quot;                                                                   
+ [36] &quot;Adam Corsini.2&quot;                                                                        
+ [37] &quot;Kelly Abbott.1&quot;                                                                        
+ [38] &quot;INRAP&quot;                                                                                 
+ [39] &quot;INRAP.1&quot;                                                                               
+ [40] &quot;drspacejunk&quot;                                                                           
+ [41] &quot;angela middleton&quot;                                                                      
+ [42] &quot;Sebastian Foxley&quot;                                                                      
+ [43] &quot;Kelly Abbott.2&quot;                                                                        
+ [44] &quot;Kelly Abbott.3&quot;                                                                        
+ [45] &quot;Claire Woodhead.2&quot;                                                                     
+ [46] &quot;INRAP.2&quot;                                                                               
+ [47] &quot;Michelle Zupan&quot;                                                                        
+ [48] &quot;magago&quot;                                                                                
+ [49] &quot;RCAHMS.26&quot;                                                                             
+ [50] &quot;Jaime Almansa Sánchez.4&quot;                                                               
+ [51] &quot;RCAHMS.29&quot;                                                                             
+ [52] &quot;Giuliano De Felice&quot;                                                                    
+ [53] &quot;ArchaeoAD&quot;                                                                             
+ [54] &quot;Becky Wragg Sykes&quot;                                                                     
+ [55] &quot;Daniel Pett&quot;                                                                           
+ [56] &quot;Lorna Richardson.2&quot;                                                                    
+ [57] &quot;Lorna Richardson.3&quot;                                                                    
+ [58] &quot;Lorna Richardson.5&quot;                                                                    
+ [59] &quot;Lorna Richardson.6&quot;                                                                    
+ [60] &quot;Lorna Richardson.7&quot;                                                                    
+ [61] &quot;Lorna Richardson.8&quot;                                                                    
+ [62] &quot;Todd Whitelaw&quot;                                                                         
+ [63] &quot;Valentina.1&quot;                                                                           
+ [64] &quot;Simone82&quot;                                                                              
+ [65] &quot;Andrea&quot;                                                                                
+ [66] &quot;Elizabeth Moore&quot;                                                                       
+ [67] &quot;Anabelle Castaño&quot;                                                                      
+ [68] &quot;Wessex Archaeology&quot;                                                                    
+ [69] &quot;Wessex Archaeology.1&quot;                                                                  
+ [70] &quot;Wessex Archaeology.2&quot;                                                                  
+ [71] &quot;Wessex Archaeology.3&quot;                                                                  
+ [72] &quot;AngelGreen&quot;                                                                            
+ [73] &quot;Laracuente.1&quot;                                                                          
+ [74] &quot;Christina O&#39;Regan&quot;                                                                     
+ [75] &quot;Italian National Association of Archaeologists.1&quot;                                      
+ [76] &quot;Janet Jones&quot;                                                                           
+ [77] &quot;Henriette Roued-Cunliffe&quot;                                                              
+ [78] &quot;Sheena Payne-Lunn&quot;                                                                     
+ [79] &quot;Project Florence&quot;                                                                      
+ [80] &quot;Monrepos - Archaeological Research Centre and Museum for Human Behavioural Evolution.1&quot;
+ [81] &quot;MOLA.13&quot;                                                                               
+ [82] &quot;Beverly Chiarulli&quot;                                                                     
+ [83] &quot;Richard O&#39;Brien&quot;                                                                       
+ [84] &quot;Evaristo Gestoso Rodriguez&quot;                                                            
+ [85] &quot;AMTTA.1&quot;                                                                               
+ [86] &quot;Margie&quot;                                                                                
+ [87] &quot;Sarah Bennett.1&quot;                                                                       
+ [88] &quot;duncans&quot;                                                                               
+ [89] &quot;John Worth&quot;                                                                            
+ [90] &quot;Dana Goodburn-Brown.3&quot;                                                                 
+ [91] &quot;Beth Pruitt.1&quot;                                                                         
+ [92] &quot;NGO Archaeologica&quot;                                                                     
+ [93] &quot;Philadelphia Archaeological Forum.3&quot;                                                   
+ [94] &quot;Ashley McCuistion&quot;                                                                     
+ [95] &quot;Marni Walter.1&quot;                                                                        
+ [96] &quot;AVenovcevs&quot;                                                                            
+ [97] &quot;AKOT Heritage&quot;                                                                         
+ [98] &quot;nashcl&quot;                                                                                
+ [99] &quot;michigan.1&quot;                                                                            
+[100] &quot;David Standing.1&quot;                                                                      
+[101] &quot;Robin Standring.1&quot;                                                                     
+[102] &quot;Laura Griffin&quot;                                                                         
+[103] &quot;John Worth.1&quot;                                                                          
+[104] &quot;Bernard K. Means.1&quot;                                                                    
+[105] &quot;Ian Richardson.1&quot;                                                                      
+[106] &quot;aeadams83&quot;                                                                             
+[107] &quot;cornelius&quot;                                                                             
+[108] &quot;NGO Archaeologica.1&quot;                                                                   
+[109] &quot;David Howell.1&quot;                                                                        
+[110] &quot;hinesbuwf&quot;                                                                             
+[111] &quot;eharchaeology&quot;                                                                         
+[112] &quot;Damian Shiels&quot;                                                                         
+[113] &quot;Peter Reavill.1&quot;                                                                       
+[114] &quot;Peter Reavill.2&quot;                                                                       
+[115] &quot;MOLA.16&quot;                                                                               
+[116] &quot;Peter Reavill.3&quot;                                                                       
+[117] &quot;Rachel Ives.1&quot;                                                                         
+[118] &quot;Sophie Hay.1&quot;                                                                          
+[119] &quot;Thomas Loebel&quot;                                                                         
+[120] &quot;María José Figuerero&quot;                                                                  
+[121] &quot;Carmen Ting&quot;                                                                           
+[122] &quot;Peter Reavill.4&quot;                                                                       
+[123] &quot;RCAHMS.35&quot;                                                                             
+[124] &quot;MOLA.19&quot;                                                                               
+[125] &quot;transit_monkey&quot;                                                                        
+[126] &quot;ralphj&quot;                                                                                
+[127] &quot;Peter Reavill.5&quot;                                                                       
+[128] &quot;Emily Noel-Paton&quot;                                                                      
+[129] &quot;Peter Reavill.6&quot;                                                                       
+[130] &quot;Tim Young.1&quot;                                                                           
+[131] &quot;Declan Moore (Moore Group).1&quot;                                                          
+[132] &quot;Liz Goodman&quot;                                                                           
+[133] &quot;Gaye Nayton&quot;                                                                           
+[134] &quot;John Worth.2&quot;                                                                          
+[135] &quot;MOLA.24&quot;                                                                               
+[136] &quot;alinelara&quot;                                                                             
+[137] &quot;Claire Woodhead.7&quot;                                                                     
+[138] &quot;RCAHMS.40&quot;                                                                             
+[139] &quot;Peter Reavill.8&quot;                                                                       
+[140] &quot;Cathy Dagg.1&quot;                                                                          
+[141] &quot;Helen Williams.1&quot;                                                                      
+[142] &quot;Charles Mount.1&quot;                                                                       
+[143] &quot;murosv&quot;                                                                                
+[144] &quot;Ferry&quot;                                                                                 
+[145] &quot;Grace Krause.1&quot;                                                                        
+[146] &quot;hinesbuwf.1&quot;                                                                           
+[147] &quot;David Hunter&quot;                                                                          
+[148] &quot;Peter Reavill.9&quot;                                                                       
+
+[[20]]
+ [1] &quot;Matt Law&quot;               &quot;alexism&quot;                &quot;SUrachi&quot;               
+ [4] &quot;Rob Hedge&quot;              &quot;Claire Woodhead&quot;        &quot;Matt Law.1&quot;            
+ [7] &quot;Rebecca&quot;                &quot;castlesandcoprolites&quot;   &quot;Matt Law.2&quot;            
+[10] &quot;Dana Goodburn-Brown.1&quot;  &quot;Melonie Shier&quot;          &quot;David Osborne&quot;         
+[13] &quot;eastoxford&quot;             &quot;DeborahFox&quot;             &quot;Liza Kavanagh&quot;         
+[16] &quot;Joe Flatman&quot;            &quot;Pat Hadley&quot;             &quot;long1086&quot;              
+[19] &quot;Hembo Pagi&quot;             &quot;Stu Eve&quot;                &quot;Andy Dufton&quot;           
+[22] &quot;Sara Perry&quot;             &quot;Allison Mickel&quot;         &quot;Richard Madgwick&quot;      
+[25] &quot;Alice Forward&quot;          &quot;Jacqui Mulville&quot;        &quot;castlesandcoprolites.1&quot;
+[28] &quot;Don Henson.3&quot;          
+
+[[21]]
+ [1] &quot;CAT&quot;                                                                                 
+ [2] &quot;CoDA_ucb.3&quot;                                                                          
+ [3] &quot;bajrjobs.1&quot;                                                                          
+ [4] &quot;Carly Hilts, Current Archaeology/Current World Archaeology&quot;                          
+ [5] &quot;Samantha Brown&quot;                                                                      
+ [6] &quot;bajrjobs.2&quot;                                                                          
+ [7] &quot;bajrjobs.3&quot;                                                                          
+ [8] &quot;Annie Partridge&quot;                                                                     
+ [9] &quot;F.R.A.G.&quot;                                                                            
+[10] &quot;Christopher Merritt&quot;                                                                 
+[11] &quot;Monrepos - Archaeological Research Centre and Museum for Human Behavioural Evolution&quot;
+[12] &quot;Anne Jensen&quot;                                                                         
+[13] &quot;Xtinebean&quot;                                                                           
+[14] &quot;Nancy Grace&quot;                                                                         
+[15] &quot;Carl Carlson-Drexler&quot;                                                                
+[16] &quot;Matthew Jones&quot;                                                                       
+[17] &quot;Carly Hilts, Current Archaeology/Current World Archaeology.1&quot;                        
+[18] &quot;Terry Brock&quot;                                                                         
+[19] &quot;MOLA.21&quot;                                                                             
+[20] &quot;Robyn Antanovskii&quot;                                                                   
+[21] &quot;izoken&quot;                                                                              
+[22] &quot;Geoff Wyatt&quot;                                                                         
+
+[[22]]
+ [1] &quot;Darlene Applegate&quot;                   &quot;Sean Naleimaile&quot;                    
+ [3] &quot;Mandy Ranslow&quot;                       &quot;Jamie Chad Brandon&quot;                 
+ [5] &quot;John Lowe&quot;                           &quot;cdrexler&quot;                           
+ [7] &quot;Nicole Bucchino&quot;                     &quot;Sean Naleimaile.1&quot;                  
+ [9] &quot;cames&quot;                               &quot;Claire vanNierop&quot;                   
+[11] &quot;gwynn henderson&quot;                     &quot;Glynis Irwin.1&quot;                     
+[13] &quot;Philadelphia Archaeological Forum&quot;   &quot;Philadelphia Archaeological Forum.1&quot;
+[15] &quot;Philadelphia Archaeological Forum.2&quot; &quot;Philadelphia Archaeological Forum.4&quot;
+[17] &quot;John Lowe.1&quot;                         &quot;Mandy Ranslow.1&quot;                    
+[19] &quot;Kurt Thomas Hunt&quot;                    &quot;Valerie M. J. Hall&quot;                 
+[21] &quot;Rebecca Duggan&quot;                      &quot;Lucy Johnson&quot;                       
+[23] &quot;Jamie Chad Brandon.1&quot;               
+
+[[23]]
+ [1] &quot;SuccinctBill&quot;           &quot;Doug&quot;                   &quot;CoDA_ucb&quot;              
+ [4] &quot;Russell Alleen-Willems&quot; &quot;Shawn Graham&quot;           &quot;CoDA_ucb.1&quot;            
+ [7] &quot;Leigh Anne&quot;             &quot;CoDA_ucb.2&quot;             &quot;CoDA_ucb.4&quot;            
+[10] &quot;Beatrice Hopkinson&quot;     &quot;CoDA_ucb.5&quot;             &quot;Neil Gevaux&quot;           
+[13] &quot;APAAME&quot;                 &quot;Andrew Reinhard&quot;        &quot;Ray Moore&quot;             
+[16] &quot;cejo&quot;                   &quot;Doug.1&quot;                 &quot;Ulla Rajala&quot;           
+[19] &quot;Eric Kansa&quot;             &quot;Shawn Graham.2&quot;         &quot;emmajaneoriordan&quot;      
+[22] &quot;ADS&quot;                    &quot;Ethan Watrall&quot;          &quot;Andrew Reinhard.1&quot;     
+[25] &quot;Kasia&quot;                  &quot;emmajaneoriordan.1&quot;     &quot;Kasia.1&quot;               
+
+[[24]]
+ [1] &quot;Francis Deblauwe&quot;           &quot;Jacq Matthews&quot;             
+ [3] &quot;Kathryn E. Piquette&quot;        &quot;Bob Muckle&quot;                
+ [5] &quot;Mark Patton&quot;                &quot;johnwillimas&quot;              
+ [7] &quot;SuzieThomas&quot;                &quot;cristiana.2&quot;               
+ [9] &quot;Kelly M&quot;                    &quot;Becky Wragg Sykes.1&quot;       
+[11] &quot;Alex Nagel&quot;                 &quot;Udjahorresnet&quot;             
+[13] &quot;Kathryn E. Piquette.1&quot;      &quot;Diefenerfer.1&quot;             
+[15] &quot;Nancy Lovell&quot;               &quot;bupap&quot;                     
+[17] &quot;terhi&quot;                      &quot;Henriette Roued-Cunliffe.1&quot;
+[19] &quot;Axel G. Posluschny&quot;         &quot;Bob Muckle.1&quot;              
+[21] &quot;ArchaeoAD.1&quot;                &quot;Melanie Pitkin&quot;            
+
+[[25]]
+ [1] &quot;Adam Corsini&quot;        &quot;Adam Corsini.1&quot;      &quot;Adam Corsini.3&quot;     
+ [4] &quot;Adam Corsini.4&quot;      &quot;Adam Corsini.5&quot;      &quot;Marcel Dallinger&quot;   
+ [7] &quot;Pippa Pearce&quot;        &quot;CooperCenter&quot;        &quot;Andrew Fetherston&quot;  
+[10] &quot;Lucy Sawyer&quot;         &quot;Andrew Fetherston.1&quot; &quot;CooperCenter.1&quot;     
+[13] &quot;Andrew Fetherston.2&quot; &quot;Andrew Fetherston.3&quot; &quot;fieldwork&quot;          
+[16] &quot;Andrew Fetherston.4&quot; &quot;Andrew Fetherston.5&quot;
+
+[[26]]
+ [1] &quot;Diefenerfer&quot;                &quot;Angela Piccini&quot;            
+ [3] &quot;Serra Head&quot;                 &quot;Ryan Swanson&quot;              
+ [5] &quot;PalatineEastPotteryProject&quot; &quot;magago.1&quot;                  
+ [7] &quot;Mathias Probst&quot;             &quot;Jacq Matthews.1&quot;           
+ [9] &quot;Tanya Peres Lemons&quot;         &quot;cartvol.5&quot;                 
+[11] &quot;Lorna Richardson.10&quot;        &quot;FlindersArchSoc&quot;           
+[13] &quot;tkriek&quot;                     &quot;Polly Peterson&quot;            
+[15] &quot;Vasilka Dimitrovska&quot;       
+
+[[27]]
+ [1] &quot;DavidAltoft&quot;               &quot;ssprince&quot;                 
+ [3] &quot;Bairbre Mullee&quot;            &quot;Cayla Breiling&quot;           
+ [5] &quot;Sally Rodgers&quot;             &quot;Sarah JaneHarknett&quot;       
+ [7] &quot;Claire Woodhead.1&quot;         &quot;Alex Moseley&quot;             
+ [9] &quot;Samantha Colclough&quot;        &quot;Amanda Clarke&quot;            
+[11] &quot;talia_shay&quot;                &quot;Marni Walter&quot;             
+[13] &quot;Archaeology UFPI - BRAZIL&quot; &quot;Cara Jones.1&quot;             
+[15] &quot;sarah_may1.1&quot;              &quot;Charlotte Douglas.1&quot;      
+[17] &quot;Bairbre Mullee.1&quot;          &quot;Samantha Barnes&quot;          
+[19] &quot;Hayley Forsyth&quot;            &quot;Brian&quot;                    
+[21] &quot;Joanne Robinson&quot;           &quot;LizzieW&quot;                  
+[23] &quot;bthorn&quot;                    &quot;Mike Pitts&quot;               
+[25] &quot;Andrew Mayfield&quot;           &quot;Andrew Mayfield.2&quot;        
+[27] &quot;Brian.1&quot;                  
+
+[[28]]
+ [1] &quot;Alfred W. Bowers Laboratory of Anthropology&quot;
+ [2] &quot;Stefano Costa&quot;                              
+ [3] &quot;Penny Johnston&quot;                             
+ [4] &quot;Frank Lynam&quot;                                
+ [5] &quot;MOLA.4&quot;                                     
+ [6] &quot;Lorna Richardson.9&quot;                         
+ [7] &quot;Helen Sharp&quot;                                
+ [8] &quot;FALSE&quot;                                      
+ [9] &quot;Rachael Sparks.1&quot;                           
+[10] &quot;Claire Woodhead.3&quot;                          
+[11] &quot;Roman Baths Museum&quot;                         
+[12] &quot;sven&quot;                                       
+[13] &quot;Dawn McLaren.1&quot;                             
+[14] &quot;RCAHMS.42&quot;                                  
+
+[[29]]
+ [1] &quot;Bob Clarke&quot;                         &quot;Chiz Harward (Urban Archaeology).1&quot;
+ [3] &quot;Katy Meyers&quot;                        &quot;Rose&quot;                              
+ [5] &quot;mwilliams&quot;                          &quot;Nicola Hembrey&quot;                    
+ [7] &quot;Helen Goodchild&quot;                    &quot;Sue Harrington&quot;                    
+ [9] &quot;Kasia.2&quot;                            &quot;jpalmer&quot;                           
+[11] &quot;Stefan Sagrott&quot;                    
+
+[[30]]
+ [1] &quot;SusanneT&quot;                     &quot;adamrabinowitz&quot;              
+ [3] &quot;Donna Yates&quot;                  &quot;Eleanor Ghey&quot;                
+ [5] &quot;Keith Fitzpatrick-Matthews&quot;   &quot;phdiva&quot;                      
+ [7] &quot;Keith Fitzpatrick-Matthews.1&quot; &quot;Laura Burnett.1&quot;             
+ [9] &quot;Charlotte Dixon&quot;              &quot;Peter Reavill.7&quot;             
+[11] &quot;Keith Fitzpatrick-Matthews.2&quot; &quot;Wendy Scott&quot;                 
+</code></pre>
+
+<h4>Visualisation of author groups</h4>
+
+<p>Here is a static visualisation of the relationship between all the authors. We get a quick sense that there are distinctive groups, but it&#39;s too small to show author names which is a major limitation.
 <img src="data:image/png;base64,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" alt="static visualisation"/></p>
 
-<p>Here is a <a href="http://htmlpreview.github.io/?https://github.com/benmarwick/dayofarchaeology/master/figures/d3net.html">slightly interactive visualisation</a>, where we can see names on the nodes (click on them to magnify the name) and inspect them in more detail by dragging them around. A more interactive version can be downloaded <a href="https://raw.github.com/benmarwick/dayofarchaeology/master/figures/g.graphml">here</a> (right-click -&gt; save link as&hellip;) and opened in <a href="https://gephi.org/">Gephi</a></p>
+<p>Here is a <a href="http://htmlpreview.github.io/?https://github.com/benmarwick/dayofarchaeology/master/figures/d3net.html">slightly interactive visualisation</a>, where we can see names on the nodes (click on them to magnify the name) and inspect them in more detail by dragging them around. </p>
 
-<h2>Discussion</h2>
+<p>An even more interactive version can be downloaded <a href="https://raw.github.com/benmarwick/dayofarchaeology/master/figures/g.graphml">here</a> (right-click -&gt; save link as&hellip;) and opened in <a href="https://gephi.org/">Gephi</a>. </p>
 
-<h2>Conclusion</h2>
+<h2>Discussion and Conclusion</h2>
+
+<p>To return to the questions that motivated this little investigation, we can get some answers from what is missing from the results, as well as what is present. Key terms that are not prominent in the topics are pyramids, temples, whips and any kind of firearm. This suggests that a day in the life of the most popular Hollywood archaeologists has little in common with the people contributing to the day of archaeology. There is a small area of intersection, as </p>
+
+<p>The questions I&#39;m attempting to answer with this distant reading include: what is a typical day for an archaeologist? What are the different kinds of day that are represented in this collection? Do all archaeologists have generally similar days or not? As an archaeologist also I&#39;m curious to see how my day compares with others!</p>
 
 </body>
 
