@@ -557,7 +557,7 @@ Next we have a chart showing a sample of things that pose dangers to archaeologi
 
 ![dangers](figures/fear.png)
 
-Those two charts are of course tongue-in-cheek (and the code is in the repository so you can make your own with any combination of other tools and dangers)
+Those two charts are of course tongue-in-cheek (and the code is in the repository so you can make your own with any combination of other tools and dangers) and quick-and-dirty (for example I've not attempted to distinguish between hot as in spicy and hot as in summer weather). However, we can clearly see a few differences between popular images of archaeologists and how archaeologists describe themselves. 
 
 While field activites such as excavation and survey seem prominent in the topic model, we get relatively little insight into the post-excavation analytical process. Labs are mentioned in topics 3, 24, 29, but the other terms in these topics suggest the lab work relates to conservation and preservation. Topic 26 is the exception, as it seems to be include a Neolithic faunal analysis that involves isotope analysis. This topic also notable for it's negative sentiment - 'difficult', this may be one reason why relatively few people are writing about lab analyses. Another reason might be that it can be hard to know what to write about in the middle of lab work, when the interpretations are still emerging from the fog of data.
 
