@@ -80,3 +80,51 @@ dtm <- DocumentTermMatrix(corp, control =
 # how many times does the word 'pyramid' occur in this document term matrix?
 dtmdf <- data.frame(inspect(dtm))
 sum(dtmdf[, names(dtmdf) == 'pyramid'])
+
+# Indiana Jones comparison
+
+# list words of interest - things archys use
+IJ1 <- c('trowel', 'shovel', 'spade', 'gun', 'whip', 'fedora', 'computer', 'pen')
+# get word counts in document term matrix
+IJ2 <- dtmdf[, intersect(names(dtmdf), IJ1)]
+# find words that don't occur in dtm at all
+notin <- setdiff(IJ1, names(dtmdf) )
+# append of cols of zeros for these words not in the dtm
+IJ3 <- cbind(IJ2, replicate(length(notin), rep(0,nrow(IJ2))) )
+# edit col names
+names(IJ3) <- c(names(IJ2), notin)
+# reshape for plotting                   
+require(reshape2)
+IJ4 <- melt(IJ3)
+require(ggplot2)
+ggplot(IJ4, aes(reorder(variable,-value), value)) + 
+  geom_bar(stat="identity") +
+  xlab("Things archaeologists use in the field") +
+  ylab("Term Frequency") + theme(axis.text.x = element_text(colour="grey20",size=17,angle=0,hjust=.5,vjust=.5,face="plain"),
+                                 axis.text.y = element_text(colour="grey20",size=15,angle=0,hjust=1,vjust=0,face="plain"),  
+                                 axis.title.x = element_text(colour="grey20",size=15,angle=0,hjust=.5,vjust=0,face="plain"),
+                                 axis.title.y = element_text(colour="grey20",size=15,angle=90,hjust=.5,vjust=.5,face="plain"))
+  
+
+# list words of interest - things archys fear
+IJ1 <- c('tunnels', 'cliffs', 'heat', 'cold', 'insects', 'snakes', 'bears', 'nazis', 'aliens')
+# get word counts in document term matrix
+IJ2 <- dtmdf[, intersect(names(dtmdf), IJ1)]
+# find words that don't occur in dtm at all
+notin <- setdiff(IJ1, names(dtmdf) )
+# append of cols of zeros for these words not in the dtm
+IJ3 <- cbind(IJ2, replicate(length(notin), rep(0,nrow(IJ2))) )
+# edit col names
+names(IJ3) <- c(names(IJ2), notin)
+# reshape for plotting                   
+require(reshape2)
+IJ4 <- melt(IJ3)
+require(ggplot2)
+ggplot(IJ4, aes(reorder(variable,-value), value)) + 
+  geom_bar(stat="identity") +
+  xlab("Dangers faced by archaeologists") +
+  ylab("Term Frequency") + theme(axis.text.x = element_text(colour="grey20",size=17,angle=0,hjust=.5,vjust=.5,face="plain"),
+                                 axis.text.y = element_text(colour="grey20",size=15,angle=0,hjust=1,vjust=0,face="plain"),  
+                                 axis.title.x = element_text(colour="grey20",size=15,angle=0,hjust=.5,vjust=0,face="plain"),
+                                 axis.title.y = element_text(colour="grey20",size=15,angle=90,hjust=.5,vjust=.5,face="plain"))
+
