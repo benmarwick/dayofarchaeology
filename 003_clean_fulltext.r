@@ -68,7 +68,7 @@ corp <- tm_map(corp, FUN = tm_reduce, tmFuns = funcs)
 # create document term matrix
 dtm <- DocumentTermMatrix(corp, control = 
                             # limit word lengths
-                            list(wordLengths = c(3,10))) # , 
+                            list(wordLengths = c(2,10))) # , 
                                 ## A few other options for text mining
                                  # control weighting
                                  # weighting = weightTfIdf, 
@@ -154,4 +154,45 @@ ggplot(IJ4, aes(reorder(variable,-value), value)) +
                                  axis.text.y = element_text(colour="grey20",size=15,angle=0,hjust=1,vjust=0,face="plain"),  
                                  axis.title.x = element_text(colour="grey20",size=15,angle=0,hjust=.5,vjust=0,face="plain"),
                                  axis.title.y = element_text(colour="grey20",size=15,angle=90,hjust=.5,vjust=.5,face="plain"))
+
+# what about gender?
+
+# list words of interest - things archys study
+IJ1 <- c('he', 'him', 'his', 'she', 'her', 'hers')
+# get word counts in document term matrix
+IJ2 <- dtmdf[, intersect(names(dtmdf), IJ1)]
+# find words that don't occur in dtm at all
+notin <- setdiff(IJ1, names(dtmdf) )
+# append of cols of zeros for these words not in the dtm
+ifelse(length(notin) == 0,
+       IJ3 <- IJ2,
+       IJ3 <- cbind(IJ2,  replicate(length(notin), rep(0,nrow(IJ2))) )
+)
+# edit col names
+names(IJ3) <- c(names(IJ2), notin)
+# reshape for plotting                   
+require(reshape2)
+IJ4 <- melt(IJ3)
+require(ggplot2)
+ggplot(IJ4, aes(reorder(variable,-value), value)) + 
+  geom_bar(stat="identity") +
+  xlab("Use of gender-specific pronouns by archaeologists") +
+  ylab("Term Frequency") + theme(axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=.5,vjust=.5,face="plain"),
+                                 axis.text.y = element_text(colour="grey20",size=15,angle=0,hjust=1,vjust=0,face="plain"),  
+                                 axis.title.x = element_text(colour="grey20",size=15,angle=0,hjust=.5,vjust=0,face="plain"),
+                                 axis.title.y = element_text(colour="grey20",size=15,angle=90,hjust=.5,vjust=.5,face="plain"))
+
+# aggregate male and female pronouns
+IJ5 <- data.frame(male =   rowSums(cbind(IJ3$he, IJ3$him, IJ3$his)), 
+                  female = rowSums(cbind(IJ3$she, IJ3$her, IJ3$hers)))
+IJ6 <- melt(IJ5)
+require(ggplot2)
+ggplot(IJ6, aes(reorder(variable,-value), value, fill = variable))+ 
+  geom_bar(stat="identity") +
+  xlab("Use of gender-specific pronouns by archaeologists") +
+  ylab("Term Frequency") + theme(axis.text.x = element_text(colour="grey20",size=12,angle=0,hjust=.5,vjust=.5,face="plain"),
+                                 axis.text.y = element_text(colour="grey20",size=15,angle=0,hjust=1,vjust=0,face="plain"),  
+                                 axis.title.x = element_text(colour="grey20",size=15,angle=0,hjust=.5,vjust=0,face="plain"),
+                                 axis.title.y = element_text(colour="grey20",size=15,angle=90,hjust=.5,vjust=.5,face="plain")) +
+  scale_fill_manual(values=c("blue", "#FF0066"))
 
