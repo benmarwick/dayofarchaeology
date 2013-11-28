@@ -19,3 +19,4 @@ for(i in 1:n){
   # extract links for all posts
   links[[i+1]] <- unname(xpathSApply(blogdata,"//h2/a/@href"))
 }
+

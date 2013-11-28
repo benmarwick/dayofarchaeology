@@ -10,7 +10,9 @@ blogtext <- data.frame(text =  vector(length = length(linksall)),
                        year = vector(length = length(linksall)),
                        author = vector(length = length(linksall))
                        )
-)
+
+# make a list to store comments for each blog post
+names <- vector("list", length = length(linksall))
 
 # loop over the URLs to pull full text, etc. from each URL
 # includes error handling in case a field is empty, etc.
@@ -36,6 +38,11 @@ for(i in 1:length(linksall)){
   result <- try(
     blogtext[i,4] <- xpathSApply(blogdata, "//*/span[@class='fn']", xmlValue)
   ); if(class(result) == "try-error") next;
+   # and the names of the commenters 
+   result <- try(
+     commenters[[i]] <- xpathSApply(blogdata, "//*/span[@class='name']", xmlValue)
+  ); if(class(result) == "try-error") next;
+  
 }
 
 # add columns of URLs to the fulltext post
