@@ -100,7 +100,7 @@ df3 <- aggregate(topic_docs_t, by=list(topic_docs_t$year), FUN=mean)
 # the last column because it has NAs in it, a side-effect of the
 # aggregate function above. Here's my original line:
 # df3 <- data.frame(t(df3[-3,-length(df3)]), stringsAsFactors = FALSE)
-# And below is an updated version that generalise this in case 
+# And below is an updated version that generalises this in case 
 # you have more than two years:
 years <- sort(as.character(na.omit(as.numeric(as.character(unique(topic_docs_t$year))))))
 df3 <- data.frame(t(df3[(df3$Group.1 %in% years),-length(df3)]), stringsAsFactors = FALSE)
