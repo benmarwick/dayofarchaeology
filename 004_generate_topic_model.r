@@ -83,18 +83,64 @@ plot(hclust(dist(topic.words)), labels=topics.labels)
 
 topic_docs_t <- data.frame(t(topic_docs))
 topic_docs_t$year <- documents$class
+# now we have a data frame where each row is a topic and 
+# each column is a document. The cells contain topic 
+# proportions. The next line computes the average proportion of
+# each topic in all the posts in a given year. Note that in 
+# topic_docs_t$year there is one FALSE, which dirties the data
+# slightly and causes warnings
 df3 <- aggregate(topic_docs_t, by=list(topic_docs_t$year), FUN=mean)
-df3 <- data.frame(t(df3[-3,-length(df3)]), stringsAsFactors = FALSE)
-names(df3) <- c("y2012", "y2013")
+# this next line transposes the wide data frame created by the above
+# line into a tall data frame where each column is a year. The 
+# input data frame is subset to omit the last row because this
+# last row is the result of the anomalous FALSE value that 
+# is in place of the year for one blog post. This is probably
+# a result of a glitch in the blog page format. I also exclude
+# the last column because it has NAs in it, a side-effect of the
+# aggregate function above
+# df3 <- data.frame(t(df3[-3,-length(df3)]), stringsAsFactors = FALSE)
+# We can generalise this in case you don't have any FALSE values
+# or if you have more than two years, like so
+years <- sort(as.character(na.omit(as.numeric(as.character(unique(topic_docs_t$year))))))
+df3 <- data.frame(t(df3[(df3$Group.1 %in% years),-length(df3)]), stringsAsFactors = FALSE)
+# now we put on informative column names
+# names(df3) <- c("y2012", "y2013")
+# Here's a more general version in case you have more than two years
+# or different years to what I've got:
+names(df3) <- unname(sapply(years, function(i) paste0("y",i)))
+# the next line removes the first row, which is just the years
 df3 <- df3[-1,]
+# the next line converts all the values to numbers so we can 
+# work on them
 df3 <- data.frame(apply(df3, 2, as.numeric, as.character))
 df3$topic <- 1:n.topics
 
-# which topics differ the most?
+# which topics differ the most between the years? 
+
+# If you have 
+# more than two years you will need to do things differently
+# by adding in some more pairwise comparisons. Here is one 
+# pairwise comparison:
 df3$diff <- df3[,1] - df3[,2] 
 df3[with(df3, order(-abs(diff))), ]
+# # then if you had three years you might then do
+# # a comparison of yrs 1 and 3
+# df3$diff2 <- df3[,1] - df3[,3] 
+# df3[with(df3, order(-abs(diff2))), ]
+# # and the other pairwise comparison of yrs 2 and 3
+# df3$diff3 <- df3[,2] - df3[,3] 
+# df3[with(df3, order(-abs(diff3))), ]
+## and so on
+
 
 # plot
+library(reshape2)
+# we reshape from long to very long! and drop the 
+# 'diff' column that we computed above by using a negatve 
+# index, that's the -4 in the line below. You'll need to change
+# that value if you have more than two years, you might find
+# replacing it with -ncol(df3) will do the trick, if you just
+# added one diff column. 
 df3m <- melt(df3[,-4], id = 3)
 ggplot(df3m, aes(fill = as.factor(topic), topic, value)) +
   geom_bar(stat="identity") +

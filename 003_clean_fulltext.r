@@ -8,6 +8,9 @@ blogtext[,1] <- gsub("\n","", blogtext[,1])
 # save as CSV so others can use it
 write.csv(blogtext, 'dayofarchaeology.csv')
 
+# if loading CSV file to run from here:
+# blogtext <- read.csv("dayofarchaeology.csv", stringsAsFactors = FALSE)
+
 # a few quick summary statistics
 
 # How many posts in total?
@@ -61,6 +64,8 @@ ggplot(wpp, aes(as.factor(year), words, label=rownames(wpp))) +
 require(tm)
 # create corpus
 corp <- Corpus(VectorSource(blogtext[,1]))
+# if using CSV file do this instead of the line above
+# corp <- Corpus(VectorSource(blogtext[,2]))
 # process text 
 skipWords <- function(x) removeWords(x, stopwords("english"))
 funcs <- list(tolower, removePunctuation, removeNumbers, stripWhitespace, skipWords)
