@@ -92,15 +92,16 @@ topic_docs_t$year <- documents$class
 df3 <- aggregate(topic_docs_t, by=list(topic_docs_t$year), FUN=mean)
 # this next line transposes the wide data frame created by the above
 # line into a tall data frame where each column is a year. The 
-# input data frame is subset to omit the last row because this
+# input data frame is subset using the %in% function 
+# to omit the last row because this
 # last row is the result of the anomalous FALSE value that 
 # is in place of the year for one blog post. This is probably
 # a result of a glitch in the blog page format. I also exclude
 # the last column because it has NAs in it, a side-effect of the
-# aggregate function above
+# aggregate function above. Here's my original line:
 # df3 <- data.frame(t(df3[-3,-length(df3)]), stringsAsFactors = FALSE)
-# We can generalise this in case you don't have any FALSE values
-# or if you have more than two years, like so
+# And below is an updated version that generalise this in case 
+# you have more than two years:
 years <- sort(as.character(na.omit(as.numeric(as.character(unique(topic_docs_t$year))))))
 df3 <- data.frame(t(df3[(df3$Group.1 %in% years),-length(df3)]), stringsAsFactors = FALSE)
 # now we put on informative column names
